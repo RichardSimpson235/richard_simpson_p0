@@ -40,6 +40,8 @@ public class LandingView extends AbstractView {
                 System.out.println("You entered an invalid word! We got: '" + input
                                     + "', but we needed one of 'login', 'register', or 'exit'!");
             } else {
+                scanner.close();
+
                 return input;
             }
         }
