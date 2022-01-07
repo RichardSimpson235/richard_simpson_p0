@@ -3,15 +3,13 @@ package main.java.views;
 import main.java.exceptions.AuthenticationException;
 import main.java.services.LoginService;
 
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class LoginView extends AbstractView {
 
     private final LoginService service;
 
-    public LoginView(InputStream inputStream, LoginService service) {
-        super(inputStream);
+    public LoginView(LoginService service) {
         this.service = service;
     }
 
@@ -19,10 +17,13 @@ public class LoginView extends AbstractView {
      * This method renders the opening page view of the application. It is called by
      * Application, which uses its return value to determine which page to navigate to.
      *
+     * @return    returns a string that decides if the user was a student or a faculty member
      */
     @Override
-    public void render() {
+    public String render() {
         System.out.println("To log in please enter your username and password:");
+
+        return listen();
     }
 
     /**
@@ -32,8 +33,8 @@ public class LoginView extends AbstractView {
      * @return       returns a string that decides if the user was a student or a faculty member
      */
     @Override
-    public String listen() {
-        Scanner scanner = new Scanner(this.inputStream);
+    protected String listen() {
+        Scanner scanner = new Scanner(System.in);
 
         while(true) {
             System.out.print("Username: ");
@@ -49,11 +50,7 @@ public class LoginView extends AbstractView {
             String password = scanner.nextLine();
 
             try {
-
-                String type = this.service.authenticate(username, password);
-                scanner.close();
-
-                return type;
+                return this.service.authenticate(username, password);
 
             } catch (AuthenticationException e) {
                 System.out.println("Your username and password did not match our records, please try again.");
