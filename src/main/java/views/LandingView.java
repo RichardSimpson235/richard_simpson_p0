@@ -4,6 +4,12 @@ import java.util.Scanner;
 
 public class LandingView extends AbstractView {
 
+    /**
+     * This method renders the opening page view of the application. It is called by
+     * Application, which uses its return value to determine which page to navigate to.
+     *
+     * @return        the cleaned string the user input into the console
+     */
     @Override
     public String render() {
         System.out.println("Welcome to the Course Management Portal!");
@@ -15,8 +21,13 @@ public class LandingView extends AbstractView {
         return listen();
     }
 
+    /**
+     * This method is used to listen for user input. It returns the value to render.
+     *
+     * @return       the cleaned string the user input into the console
+     */
     @Override
-    public String listen() {
+    protected String listen() {
         Scanner scanner = new Scanner(System.in);
 
         while(true) {
