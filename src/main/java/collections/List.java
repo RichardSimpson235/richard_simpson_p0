@@ -44,11 +44,14 @@ public class List<E> {
 
     @Override
     public String toString() {
-        String output = "List{";
+        StringBuilder output = new StringBuilder();
+        output.append("List{");
         for (Object item: this.array) {
-            output += item.toString();
+            output.append(" " + item.toString());
         }
 
-        return output + "}";
+        output.append("}");
+
+        return output.toString();
     }
 }
