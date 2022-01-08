@@ -24,7 +24,15 @@ public class List<E> {
 
     public void remove(E item) {}
 
-    public boolean contains(E item) {}
+    public boolean contains(E item) {
+        for (Object containedItem: this.array) {
+            if (item.equals(containedItem)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public int size() {
         return size;
