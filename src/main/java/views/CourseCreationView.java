@@ -1,12 +1,12 @@
 package main.java.views;
 
-import main.java.services.CourseCreationService;
+import main.java.services.CourseEditService;
 
 import java.util.Scanner;
 
 public class CourseCreationView extends AbstractView {
 
-    private CourseCreationService service;
+    private CourseEditService service;
 
     @Override
     public String render() {
