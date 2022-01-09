@@ -1,6 +1,6 @@
 package main.java.views;
 
-import main.java.structures.List;
+import main.java.collections.List;
 import main.java.models.Course;
 import main.java.services.StudentService;
 
@@ -41,7 +41,7 @@ public class StudentView extends AbstractView {
     }
 
     @Override
-    public String listen() {
+    protected String listen() {
         Scanner scanner = new Scanner(this.inputStream);
         List<Course> courses = service.getCourses();
 
