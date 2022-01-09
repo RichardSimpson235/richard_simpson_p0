@@ -27,9 +27,9 @@ public class FacultyView extends AbstractView {
 
         System.out.println("Welcome " + service.getFacultyName() + "!");
         if(courses.isEmpty()) {
-            System.out.println("You have not created any classes yet.");
+            System.out.println("You have not created any courses yet.");
         } else {
-            System.out.println("You have created the following classes:");
+            System.out.println("You have created the following courses:");
             for(int i = 1; i <=  courses.size(); i++) {
                 System.out.println(i + ". " + courses.get(i - 1));
                 validSelections.add(i);
