@@ -2,11 +2,17 @@ package main.java.views;
 
 import main.java.services.CourseEditService;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class CourseCreationView extends AbstractView {
 
-    private CourseEditService service;
+    private final CourseEditService service;
+
+    public CourseCreationView(InputStream inputStream, CourseEditService service) {
+        super(inputStream);
+        this.service = service;
+    }
 
     @Override
     public void render() {
@@ -15,12 +21,14 @@ public class CourseCreationView extends AbstractView {
 
     @Override
     protected String listen() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(this.inputStream);
 
         System.out.println("What would you like to name this class?");
         String name = scanner.nextLine();
 
         if (name.equalsIgnoreCase("exit")) {
+            scanner.close();
+
             return name;
         }
 
@@ -29,6 +37,8 @@ public class CourseCreationView extends AbstractView {
 
         int enrollmentPeriodInt = 0;
         if (enrollmentPeriod.equalsIgnoreCase("exit")) {
+            scanner.close();
+
             return enrollmentPeriod;
 
         } else {
@@ -42,6 +52,7 @@ public class CourseCreationView extends AbstractView {
         }
 
         service.createCourse(name, enrollmentPeriodInt);
+        scanner.close();
 
         return "faculty";
     }

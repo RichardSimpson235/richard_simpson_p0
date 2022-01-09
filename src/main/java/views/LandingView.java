@@ -1,8 +1,13 @@
 package main.java.views;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class LandingView extends AbstractView {
+
+    public LandingView(InputStream inputStream) {
+        super(inputStream);
+    }
 
     /**
      * This method renders the opening page view of the application. It is called by
@@ -25,7 +30,7 @@ public class LandingView extends AbstractView {
      */
     @Override
     protected String listen() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {
             String input = scanner.nextLine();
