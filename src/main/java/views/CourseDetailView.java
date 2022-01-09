@@ -4,6 +4,7 @@ import main.java.exceptions.InvalidDataException;
 import main.java.models.Course;
 import main.java.services.CourseEditService;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class CourseDetailView extends AbstractView {
@@ -12,7 +13,8 @@ public class CourseDetailView extends AbstractView {
     private final Course course;
     private final CourseEditService service;
 
-    public CourseDetailView(CourseEditService service,  boolean isFaculty) {
+    public CourseDetailView(InputStream inputStream, CourseEditService service, boolean isFaculty) {
+        super(inputStream);
         this.service = service;
         this.isFaculty = isFaculty;
 
@@ -29,16 +31,19 @@ public class CourseDetailView extends AbstractView {
     protected String listen() {
         System.out.println("If you would like to edit a field, enter the field's name (for example: 'name').");
         System.out.println("If you would like to delete the class please enter 'delete'.");
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {
             String input = scanner.nextLine();
 
             if(input.equalsIgnoreCase("exit")) {
+                scanner.close();
+
                 return input;
             } else if(input.equalsIgnoreCase("delete")) {
                 service.deleteCourse(this.course);
                 System.out.println("Course: " + course.name + " was deleted!");
+                scanner.close();
 
                 return isFaculty ? "faculty" : "student";
             } else if(course.isValidField(input)) {
@@ -47,6 +52,7 @@ public class CourseDetailView extends AbstractView {
 
                 try {
                     service.editCourse(course.ID, input, newFieldData);
+                    scanner.close();
 
                     return isFaculty ? "faculty" : "student";
                 } catch(InvalidDataException e) {

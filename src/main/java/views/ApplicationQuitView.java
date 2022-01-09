@@ -1,6 +1,12 @@
 package main.java.views;
 
+import java.io.InputStream;
+
 public class ApplicationQuitView extends AbstractView {
+
+    public ApplicationQuitView(InputStream inputStream) {
+        super(inputStream);
+    }
 
     @Override
     public void render() {
