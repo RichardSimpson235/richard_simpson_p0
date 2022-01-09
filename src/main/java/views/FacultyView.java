@@ -55,13 +55,28 @@ public class FacultyView extends AbstractView {
                 return input;
             }
 
-            if (!validSelections.contains(Integer.parseInt(input))) {
-                System.out.println("You entered an invalid number! We got: " + input + ", we need one of: " + validSelections);
-            } else {
-                scanner.close();
-                return input;
-            }
+            try {
+                int index = Integer.parseInt(input);
 
+                if(!validSelections.contains((index))) {
+                    System.out.println("You entered an invalid number! We got: " + input +
+                                        ", we need one of: " + validSelections);
+                } else {
+                    String courseName = service.getCourses().get(index).name;
+                    System.out.println("You've selected: " + input + ". " + courseName + ". Is this correct? (y/n)");
+
+                    input = scanner.nextLine();
+                    if(input.equalsIgnoreCase("y")) {
+                        scanner.close();
+
+                        return String.valueOf(index);
+                    } else if(!input.equalsIgnoreCase("n")) {
+                        System.out.println("Please enter 'y' or 'n' for yes or no.");
+                    }
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("It seems you didn't enter an integer. Please enter an integer.");
+            }
         }
     }
 }
