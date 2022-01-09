@@ -9,10 +9,8 @@ public class CourseCreationView extends AbstractView {
     private CourseEditService service;
 
     @Override
-    public String render() {
+    public void render() {
         System.out.println("You are now creating a course...");
-
-        return listen();
     }
 
     @Override

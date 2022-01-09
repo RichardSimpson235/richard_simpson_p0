@@ -18,7 +18,7 @@ public class FacultyView extends AbstractView {
     }
 
     @Override
-    public String render() {
+    public void render() {
         System.out.println("==========================================");
          List<Course> courses = service.getCourses();
 
@@ -38,8 +38,6 @@ public class FacultyView extends AbstractView {
         }
 
         System.out.println("If you would like to add a new class, please enter 'new'.");
-
-        return listen();
     }
 
     @Override
