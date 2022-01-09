@@ -17,13 +17,10 @@ public class LoginView extends AbstractView {
      * This method renders the opening page view of the application. It is called by
      * Application, which uses its return value to determine which page to navigate to.
      *
-     * @return    returns a string that decides if the user was a student or a faculty member
      */
     @Override
-    public String render() {
+    public void render() {
         System.out.println("To log in please enter your username and password:");
-
-        return listen();
     }
 
     /**
