@@ -38,6 +38,7 @@ public class CourseDetailView extends AbstractView {
                 return input;
             } else if(input.equalsIgnoreCase("delete")) {
                 service.deleteCourse(this.course);
+                System.out.println("Course: " + course.name + " was deleted!");
 
                 return isFaculty ? "faculty" : "student";
             } else if(course.isValidField(input)) {
