@@ -8,17 +8,14 @@ public class LandingView extends AbstractView {
      * This method renders the opening page view of the application. It is called by
      * Application, which uses its return value to determine which page to navigate to.
      *
-     * @return        the cleaned string the user input into the console
      */
     @Override
-    public String render() {
+    public void render() {
         System.out.println("Welcome to the Course Management Portal!");
         System.out.println("If you would like to log in, please enter 'login'.");
         System.out.println("If you would like to register, please enter 'register'.");
         System.out.println("If you would like to exit the portal, please enter 'exit'. " +
                             "You may enter exit at any time to exit the application.");
-
-        return listen();
     }
 
     /**
