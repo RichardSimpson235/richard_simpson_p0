@@ -3,13 +3,15 @@ package main.java.views;
 import main.java.exceptions.AuthenticationException;
 import main.java.services.LoginService;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class LoginView extends AbstractView {
 
     private final LoginService service;
 
-    public LoginView(LoginService service) {
+    public LoginView(InputStream inputStream, LoginService service) {
+        super(inputStream);
         this.service = service;
     }
 
@@ -31,7 +33,7 @@ public class LoginView extends AbstractView {
      */
     @Override
     protected String listen() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {
             System.out.print("Username: ");
