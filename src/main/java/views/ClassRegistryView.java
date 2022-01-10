@@ -41,10 +41,15 @@ public class ClassRegistryView extends AbstractView {
         while(true) {
             String input = scanner.nextLine();
             if(input.equalsIgnoreCase("exit")) {
+                scanner.close();
                 return input;
             } else {
                 if(this.validSelections.contains(Integer.parseInt(input))) {
                     service.enroll(Integer.parseInt(input), this.student);
+                    System.out.println("You've been enrolled!");
+                    scanner.close();
+
+                    return "student";
                 } else {
                     System.out.println("We got an invalid integer, please check that you entered the correct integer!");
                 }
