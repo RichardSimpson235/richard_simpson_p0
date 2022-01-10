@@ -1,18 +1,18 @@
 package main.java.views;
 
-import main.java.collections.List;
+import main.java.structures.List;
 import main.java.models.Course;
 import main.java.services.EnrollmentService;
 
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class ClassRegistryView extends AbstractView {
+public class CourseRegistryView extends AbstractView {
 
     private final EnrollmentService service;
     private final List<Integer> validSelections;
 
-    public ClassRegistryView(InputStream inputStream, EnrollmentService service) {
+    public CourseRegistryView(InputStream inputStream, EnrollmentService service) {
         super(inputStream);
         this.service = service;
         this.validSelections = new List<>();
@@ -42,11 +42,11 @@ public class ClassRegistryView extends AbstractView {
                 return input;
             } else {
                 if(this.validSelections.contains(Integer.parseInt(input))) {
-                    service.enroll(Integer.parseInt(input));
-                    System.out.println("You've been enrolled!");
                     scanner.close();
 
-                    return "student";
+                    // will need to create context
+
+                    return "detail";
                 } else {
                     System.out.println("We got an invalid integer, please check that you entered the correct integer!");
                 }
