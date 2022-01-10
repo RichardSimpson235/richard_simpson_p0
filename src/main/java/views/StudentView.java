@@ -1,6 +1,6 @@
 package main.java.views;
 
-import main.java.collections.List;
+import main.java.structures.List;
 import main.java.models.Course;
 import main.java.services.StudentService;
 
