@@ -41,7 +41,7 @@ public class StudentView extends AbstractView {
     }
 
     @Override
-    protected String listen() {
+    public String listen() {
         Scanner scanner = new Scanner(this.inputStream);
         List<Course> courses = service.getCourses();
 

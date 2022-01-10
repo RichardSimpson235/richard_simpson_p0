@@ -18,7 +18,7 @@ public class ApplicationQuitView extends AbstractView {
     // This method doesn't do anything in this class because we don't listen
     // for user input.
     @Override
-    protected String listen() {
+    public String listen() {
         return null;
     }
 }

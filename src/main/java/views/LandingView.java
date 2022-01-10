@@ -29,7 +29,7 @@ public class LandingView extends AbstractView {
      * @return       the cleaned string the user input into the console
      */
     @Override
-    protected String listen() {
+    public String listen() {
         Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {
