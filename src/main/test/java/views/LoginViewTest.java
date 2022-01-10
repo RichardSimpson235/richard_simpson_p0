@@ -25,15 +25,6 @@ public class LoginViewTest {
     }
 
     @Test
-    public void testListenWithExit() {
-        ByteArrayInputStream input = new ByteArrayInputStream("exit\npassword".getBytes());
-        MockLoginService mockService = new MockLoginService();
-        LoginView view = new LoginView(input, mockService);
-
-        assertEquals(view.listen(), "exit");
-    }
-
-    @Test
     public void testListenWithStudent() {
         ByteArrayInputStream input = new ByteArrayInputStream("student\npassword".getBytes());
         MockLoginService mockService = new MockLoginService();
