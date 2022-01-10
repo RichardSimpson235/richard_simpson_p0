@@ -2,8 +2,6 @@ package main.java.views;
 
 import main.java.exceptions.InvalidDataException;
 import main.java.models.Course;
-import main.java.models.Student;
-import main.java.models.User;
 import main.java.services.CourseEditService;
 
 import java.io.InputStream;
@@ -11,14 +9,12 @@ import java.util.Scanner;
 
 public class CourseDetailView extends AbstractView {
 
-    private final User user;
     private final Course course;
     private final CourseEditService service;
 
-    public CourseDetailView(InputStream inputStream, CourseEditService service, User user) {
+    public CourseDetailView(InputStream inputStream, CourseEditService service) {
         super(inputStream);
         this.service = service;
-        this.user = user;
 
         this.course = service.getCourse();
     }
@@ -32,11 +28,15 @@ public class CourseDetailView extends AbstractView {
     @Override
     public String listen() {
 
-        if(this.user.isFaculty()) {
+        if(this.service.isUserFaculty()) {
             System.out.println("If you would like to edit a field, enter the field's name (for example: 'name').");
             System.out.println("If you would like to delete the class please enter 'delete'.");
         } else {
-            System.out.println("If you would like to unenroll from this class type 'unenroll'.");
+            if(this.service.isUserEnrolled()) {
+                System.out.println("If you would like to unenroll from this class type 'unenroll'.");
+            } else {
+                System.out.println("If you would like to enroll in this class, type 'enroll'");
+            }
         }
         Scanner scanner = new Scanner(this.inputStream);
 
@@ -48,7 +48,13 @@ public class CourseDetailView extends AbstractView {
 
                 return input;
             } else if(input.equalsIgnoreCase("unenroll")) {
-                service.unenrollStudent((Student) user);
+                service.unenroll();
+                scanner.close();
+
+                return "student";
+            } else if(input.equalsIgnoreCase("enroll")) {
+                service.enroll();
+                scanner.close();
 
                 return "student";
             } else if(input.equalsIgnoreCase("delete")) {
@@ -56,7 +62,7 @@ public class CourseDetailView extends AbstractView {
                 System.out.println("Course: " + course.name + " was deleted!");
                 scanner.close();
 
-                return this.user.isFaculty() ? "faculty" : "student";
+                return this.service.isUserFaculty() ? "faculty" : "student";
             } else if(course.isValidField(input)) {
                 System.out.println("What would you like to change it to?");
                 String newFieldData = scanner.nextLine();
@@ -65,7 +71,7 @@ public class CourseDetailView extends AbstractView {
                     service.editCourse(course.ID, input, newFieldData);
                     scanner.close();
 
-                    return this.user.isFaculty() ? "faculty" : "student";
+                    return this.service.isUserFaculty() ? "faculty" : "student";
                 } catch(InvalidDataException e) {
                     System.out.println("The data you entered seems to be invalid. Please check it again.");
                 }
