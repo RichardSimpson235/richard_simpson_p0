@@ -30,7 +30,7 @@ public class CourseDetailView extends AbstractView {
     }
 
     @Override
-    protected String listen() {
+    public String listen() {
 
         if(this.user.isFaculty()) {
             System.out.println("If you would like to edit a field, enter the field's name (for example: 'name').");
