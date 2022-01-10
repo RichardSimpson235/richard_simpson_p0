@@ -32,7 +32,7 @@ public class LoginView extends AbstractView {
      * @return       returns a string that decides if the user was a student or a faculty member
      */
     @Override
-    protected String listen() {
+    public String listen() {
         Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {

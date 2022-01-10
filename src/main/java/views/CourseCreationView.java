@@ -20,7 +20,7 @@ public class CourseCreationView extends AbstractView {
     }
 
     @Override
-    protected String listen() {
+    public String listen() {
         Scanner scanner = new Scanner(this.inputStream);
 
         System.out.println("What would you like to name this class?");
