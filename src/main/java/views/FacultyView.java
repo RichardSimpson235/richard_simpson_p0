@@ -1,6 +1,5 @@
 package main.java.views;
 
-import jdk.internal.util.xml.impl.Input;
 import main.java.collections.List;
 import main.java.services.FacultyService;
 import main.java.models.Course;
@@ -44,7 +43,7 @@ public class FacultyView extends AbstractView {
     }
 
     @Override
-    protected String listen() {
+    public String listen() {
         Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {

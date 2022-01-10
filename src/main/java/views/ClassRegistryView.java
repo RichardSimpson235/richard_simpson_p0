@@ -2,7 +2,6 @@ package main.java.views;
 
 import main.java.collections.List;
 import main.java.models.Course;
-import main.java.models.Student;
 import main.java.services.EnrollmentService;
 
 import java.io.InputStream;
@@ -12,12 +11,10 @@ public class ClassRegistryView extends AbstractView {
 
     private final EnrollmentService service;
     private final List<Integer> validSelections;
-    private final Student student;
 
-    public ClassRegistryView(InputStream inputStream, EnrollmentService service, Student student) {
+    public ClassRegistryView(InputStream inputStream, EnrollmentService service) {
         super(inputStream);
         this.service = service;
-        this.student = student;
         this.validSelections = new List<>();
     }
 
@@ -35,7 +32,7 @@ public class ClassRegistryView extends AbstractView {
     }
 
     @Override
-    protected String listen() {
+    public String listen() {
         Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {
@@ -45,7 +42,7 @@ public class ClassRegistryView extends AbstractView {
                 return input;
             } else {
                 if(this.validSelections.contains(Integer.parseInt(input))) {
-                    service.enroll(Integer.parseInt(input), this.student);
+                    service.enroll(Integer.parseInt(input));
                     System.out.println("You've been enrolled!");
                     scanner.close();
 
