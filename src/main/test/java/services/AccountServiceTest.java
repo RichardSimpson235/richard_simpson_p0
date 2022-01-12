@@ -1,6 +1,6 @@
 package main.test.java.services;
 
-import main.java.exceptions.NoSuchUserException;
+import main.java.exceptions.AuthenticationFailedException;
 import main.java.exceptions.RegistrationFailedException;
 import main.java.services.AccountService;
 import main.test.java.mocks.repositories.UserFacultyRepositoryMock;
@@ -32,7 +32,7 @@ public class AccountServiceTest {
             String s = service.authenticate("username", "password");
 
             assertEquals(s, "faculty");
-        } catch (NoSuchUserException e) {
+        } catch (AuthenticationFailedException e) {
             assert false;
         }
     }
@@ -44,7 +44,7 @@ public class AccountServiceTest {
             String s = service.authenticate("username", "password");
 
             assertEquals(s, "student");
-        } catch (NoSuchUserException e) {
+        } catch (AuthenticationFailedException e) {
             assert false;
         }
     }
@@ -52,7 +52,7 @@ public class AccountServiceTest {
     @Test
     public void testFacultyAuthenticationFailure() {
         AccountService service = new AccountService(this.contextServiceMock, this.userFacultyRepositoryMock);
-        assertThrows(NoSuchUserException.class, () -> {
+        assertThrows(AuthenticationFailedException.class, () -> {
             service.authenticate("username", "pass");
         });
     }
@@ -60,7 +60,7 @@ public class AccountServiceTest {
     @Test
     public void testStudentAuthenticationFailure() {
         AccountService service = new AccountService(this.contextServiceMock, this.userStudentRepositoryMock);
-        assertThrows(NoSuchUserException.class, () -> {
+        assertThrows(AuthenticationFailedException.class, () -> {
             service.authenticate("username", "pass");
         });
     }
