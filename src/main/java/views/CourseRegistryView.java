@@ -2,17 +2,17 @@ package main.java.views;
 
 import main.java.structures.List;
 import main.java.models.Course;
-import main.java.services.EnrollmentService;
+import main.java.services.CourseService;
 
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class CourseRegistryView extends AbstractView {
 
-    private final EnrollmentService service;
+    private final CourseService service;
     private final List<Integer> validSelections;
 
-    public CourseRegistryView(InputStream inputStream, EnrollmentService service) {
+    public CourseRegistryView(InputStream inputStream, CourseService service) {
         super(inputStream);
         this.service = service;
         this.validSelections = new List<>();
@@ -22,7 +22,7 @@ public class CourseRegistryView extends AbstractView {
     public void render() {
         System.out.println("The following is a list of all of the classes:");
 
-        List<Course> courses = service.getCourses();
+        List<Course> courses = service.getAllCourses();
         for(int i = 1; i <= courses.size(); i++) {
             System.out.println(courses.get(i));
             validSelections.add(i);
@@ -41,10 +41,10 @@ public class CourseRegistryView extends AbstractView {
                 scanner.close();
                 return input;
             } else {
-                if(this.validSelections.contains(Integer.parseInt(input))) {
+                int index = Integer.parseInt(input);
+                if(this.validSelections.contains(index)) {
+                    service.selectCourse(index);
                     scanner.close();
-
-                    // will need to create context
 
                     return "detail";
                 } else {
