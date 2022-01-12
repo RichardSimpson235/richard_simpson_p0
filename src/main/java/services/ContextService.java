@@ -1,5 +1,6 @@
 package main.java.services;
 
+import main.java.models.Course;
 import main.java.structures.Context;
 
 public class ContextService {
@@ -16,5 +17,9 @@ public class ContextService {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public void setCourse(Course course) {
+        this.context.course = course;
     }
 }
