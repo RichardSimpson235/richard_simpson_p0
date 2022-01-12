@@ -6,7 +6,7 @@ import main.java.repositories.UserRepository;
 public class UserRepositoryAccountRegisterFailMock extends UserRepository {
 
     @Override
-    public void createUser(String firstName, String lastName, int age, String username, String password) throws RegistrationFailedException {
+    public void createUser(String firstName, String lastName, String age, String username, String password) throws RegistrationFailedException {
         throw new RegistrationFailedException();
     }
 }

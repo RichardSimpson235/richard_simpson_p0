@@ -26,7 +26,7 @@ public class AccountService {
         return user.getType();
     }
 
-    public void register(String firstName, String lastName, int age, String username, String password) throws RegistrationFailedException {
+    public void register(String firstName, String lastName, String age, String username, String password) throws RegistrationFailedException {
         this.userRepository.createUser(firstName, lastName, age, username, password);
     }
 

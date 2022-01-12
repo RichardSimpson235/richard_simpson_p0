@@ -71,7 +71,7 @@ public class AccountServiceTest {
         AccountService service = new AccountService(this.contextServiceMock, mockRepo);
 
         assertThrows(RegistrationFailedException.class, () -> {
-            service.register("firstname", "lastname", 23, "username", "lastname");
+            service.register("firstname", "lastname", "23", "username", "lastname");
         });
     }
 }
