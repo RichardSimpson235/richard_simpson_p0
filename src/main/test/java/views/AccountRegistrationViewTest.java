@@ -1,7 +1,8 @@
 package main.test.java.views;
 
 import main.java.views.AccountRegistrationView;
-import main.test.java.mocks.MockRegistrationService;
+import main.test.java.mocks.services.AccountServiceMock;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,11 +11,17 @@ import java.io.ByteArrayInputStream;
 
 public class AccountRegistrationViewTest {
 
+    private AccountServiceMock mockService;
+
+    @BeforeEach
+    public void init() {
+        mockService = new AccountServiceMock();
+    }
+
     @Test
     @Disabled
     public void testRender() {
         ByteArrayInputStream input = new ByteArrayInputStream("".getBytes());
-        MockRegistrationService mockService = new MockRegistrationService();
         AccountRegistrationView view = new AccountRegistrationView(input, mockService);
         view.render();
         assert true;
@@ -23,17 +30,15 @@ public class AccountRegistrationViewTest {
     @Test
     public void testStringInput() {
         ByteArrayInputStream input = new ByteArrayInputStream("richard\nsimpson\n29\nusername\npassword".getBytes());
-        MockRegistrationService mockService = new MockRegistrationService();
         AccountRegistrationView view = new AccountRegistrationView(input, mockService);
 
         String output = view.listen();
-        assertEquals(output, "student");
+        assertEquals(output, "landing");
     }
 
     @Test
     public void testExit() {
         ByteArrayInputStream input = new ByteArrayInputStream("richard\nsimpson\nexit\nusername\npassword".getBytes());
-        MockRegistrationService mockService = new MockRegistrationService();
         AccountRegistrationView view = new AccountRegistrationView(input, mockService);
 
         String output = view.listen();
