@@ -1,8 +1,9 @@
 package main.java.views;
 
+import main.java.exceptions.FailedEnrollmentException;
 import main.java.exceptions.InvalidDataException;
 import main.java.models.Course;
-import main.java.services.CourseEditService;
+import main.java.services.CourseService;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -10,9 +11,9 @@ import java.util.Scanner;
 public class CourseDetailView extends AbstractView {
 
     private final Course course;
-    private final CourseEditService service;
+    private final CourseService service;
 
-    public CourseDetailView(InputStream inputStream, CourseEditService service) {
+    public CourseDetailView(InputStream inputStream, CourseService service) {
         super(inputStream);
         this.service = service;
 
@@ -48,18 +49,26 @@ public class CourseDetailView extends AbstractView {
 
                 return input;
             } else if(input.equalsIgnoreCase("unenroll")) {
-                service.unenroll();
+                try {
+                    service.unenrollUser();
+                } catch (FailedEnrollmentException e) {
+                    System.out.println("Sorry, we were not able to unenroll you in that class.");
+                }
                 scanner.close();
 
                 return "student";
             } else if(input.equalsIgnoreCase("enroll")) {
-                service.enroll();
+                try {
+                    service.enrollUser();
+                } catch (FailedEnrollmentException e) {
+                    System.out.println("Sorry, we were not able to enroll you in that class.");
+                }
                 scanner.close();
 
                 return "student";
             } else if(input.equalsIgnoreCase("delete")) {
-                service.deleteCourse(this.course);
-                System.out.println("Course: " + course.name + " was deleted!");
+                service.deleteCourse();
+                System.out.println("Course: " + course.getName() + " was deleted!");
                 scanner.close();
 
                 return this.service.isUserFaculty() ? "faculty" : "student";
@@ -68,7 +77,7 @@ public class CourseDetailView extends AbstractView {
                 String newFieldData = scanner.nextLine();
 
                 try {
-                    service.editCourse(course.ID, input, newFieldData);
+                    service.editCourse(input, newFieldData);
                     scanner.close();
 
                     return this.service.isUserFaculty() ? "faculty" : "student";
