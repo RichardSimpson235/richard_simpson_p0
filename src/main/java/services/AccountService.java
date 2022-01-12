@@ -1,6 +1,6 @@
 package main.java.services;
 
-import main.java.exceptions.NoSuchUserException;
+import main.java.exceptions.AuthenticationFailedException;
 import main.java.exceptions.RegistrationFailedException;
 import main.java.models.Course;
 import main.java.models.User;
@@ -19,7 +19,7 @@ public class AccountService {
         this.userRepository = userRepository;
     }
 
-    public String authenticate(String username, String password) throws NoSuchUserException {
+    public String authenticate(String username, String password) throws AuthenticationFailedException {
         this.user = this.userRepository.getUser(username, password);
         this.contextService.setContext(new Context(user));
 
@@ -32,5 +32,9 @@ public class AccountService {
 
     public List<Course> getCourses() {
         return this.user.getCourses();
+    }
+
+    public String getAccountName() {
+        return this.user.getName();
     }
 }
