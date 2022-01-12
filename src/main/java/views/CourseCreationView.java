@@ -1,15 +1,18 @@
 package main.java.views;
 
-import main.java.services.CourseEditService;
+import main.java.services.CourseService;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class CourseCreationView extends AbstractView {
 
-    private final CourseEditService service;
+    private final CourseService service;
 
-    public CourseCreationView(InputStream inputStream, CourseEditService service) {
+    public CourseCreationView(InputStream inputStream, CourseService service) {
         super(inputStream);
         this.service = service;
     }
@@ -23,37 +26,52 @@ public class CourseCreationView extends AbstractView {
     public String listen() {
         Scanner scanner = new Scanner(this.inputStream);
 
-        System.out.println("What would you like to name this class?");
-        String name = scanner.nextLine();
+        while (true) {
+            System.out.println("What would you like to name this class?");
+            String name = scanner.nextLine();
+            if (name.equalsIgnoreCase("exit")) {
+                scanner.close();
 
-        if (name.equalsIgnoreCase("exit")) {
-            scanner.close();
+                return name;
+            }
 
-            return name;
-        }
+            System.out.println("Please enter a description for this class:");
+            String description = scanner.nextLine();
+            if (description.equalsIgnoreCase("exit")) {
+                scanner.close();
 
-        System.out.println("How long is the enrollment period? Please enter a number of days.");
-        String enrollmentPeriod = scanner.nextLine();
+                return description;
+            }
 
-        int enrollmentPeriodInt = 0;
-        if (enrollmentPeriod.equalsIgnoreCase("exit")) {
-            scanner.close();
+            System.out.println("When does enrollment for this class start?");
+            String enrollmentStartDate = scanner.nextLine();
+            if (enrollmentStartDate.equalsIgnoreCase("exit")) {
+                scanner.close();
 
-            return enrollmentPeriod;
+                return enrollmentStartDate;
+            }
 
-        } else {
+            System.out.println("When does enrollment for this class end?");
+            String enrollmentEndDate = scanner.nextLine();
+            if (enrollmentEndDate.equalsIgnoreCase("exit")) {
+                scanner.close();
+
+                return enrollmentEndDate;
+            }
+
+            DateFormat dateFormat = new SimpleDateFormat();
+
             try {
-                enrollmentPeriodInt = Integer.parseInt(enrollmentPeriod);
+                long enrollmentStartDateLong = dateFormat.parse(enrollmentStartDate).getTime();
+                long enrollmentEndDateLong = dateFormat.parse(enrollmentEndDate).getTime();
 
-            } catch (NumberFormatException e) {
-                System.out.println("It appears you've entered invalid input. We got: " + enrollmentPeriod +
-                                    ", but we can only take integers (ex: 3).");
+                service.createCourse(name, description, enrollmentStartDateLong, enrollmentEndDateLong);
+
+                scanner.close();
+                return "faculty";
+            } catch (ParseException e) {
+                System.out.println("The dates seems to have been in an invalid format, please try again!");
             }
         }
-
-        service.createCourse(name, enrollmentPeriodInt);
-        scanner.close();
-
-        return "faculty";
     }
 }
