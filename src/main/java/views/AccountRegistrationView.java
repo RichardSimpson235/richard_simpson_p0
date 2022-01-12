@@ -1,15 +1,16 @@
 package main.java.views;
 
-import main.java.services.RegistrationService;
+import main.java.exceptions.RegistrationFailedException;
+import main.java.services.AccountService;
 
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class AccountRegistrationView extends AbstractView {
 
-    private final RegistrationService service;
+    private final AccountService service;
 
-    public AccountRegistrationView(InputStream inputStream, RegistrationService service) {
+    public AccountRegistrationView(InputStream inputStream, AccountService service) {
         super(inputStream);
         this.service = service;
     }
@@ -53,9 +54,13 @@ public class AccountRegistrationView extends AbstractView {
             return "exit";
         }
 
-        service.register(firstName, lastName, age, username, password);
+        try {
+            service.register(firstName, lastName, age, username, password);
+        } catch (RegistrationFailedException e) {
+            System.out.println("We're sorry but it seems we had some trouble creating your account. Please try again.");
+        }
         scanner.close();
 
-        return "student";
+        return "landing";
     }
 }
