@@ -1,7 +1,7 @@
 package main.java.views;
 
 import main.java.structures.List;
-import main.java.services.FacultyService;
+import main.java.services.AccountService;
 import main.java.models.Course;
 
 import java.io.InputStream;
@@ -9,10 +9,10 @@ import java.util.Scanner;
 
 public class FacultyView extends AbstractView {
 
-    private final FacultyService service;
+    private final AccountService service;
     private final List<Integer> validSelections;
 
-    public FacultyView(InputStream inputStream, FacultyService service) {
+    public FacultyView(InputStream inputStream, AccountService service) {
         super(inputStream);
         this.service = service;
 
@@ -24,7 +24,7 @@ public class FacultyView extends AbstractView {
         System.out.println("==========================================");
          List<Course> courses = service.getCourses();
 
-        System.out.println("Welcome " + service.getFacultyName() + "!");
+        System.out.println("Welcome " + service.getAccountName() + "!");
         if(courses.isEmpty()) {
             System.out.println("You have not created any courses yet.");
         } else {
@@ -61,7 +61,7 @@ public class FacultyView extends AbstractView {
                     System.out.println("You entered an invalid number! We got: " + input +
                                         ", we need one of: " + validSelections);
                 } else {
-                    String courseName = service.getCourses().get(index).name;
+                    String courseName = service.getCourses().get(index).getName();
                     System.out.println("You've selected: " + input + ". " + courseName + ". Is this correct? (y/n)");
 
                     input = scanner.nextLine();

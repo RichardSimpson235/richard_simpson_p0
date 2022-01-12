@@ -1,16 +1,16 @@
 package main.java.views;
 
-import main.java.exceptions.AuthenticationException;
-import main.java.services.LoginService;
+import main.java.exceptions.AuthenticationFailedException;
+import main.java.services.AccountService;
 
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class LoginView extends AbstractView {
 
-    private final LoginService service;
+    private final AccountService service;
 
-    public LoginView(InputStream inputStream, LoginService service) {
+    public LoginView(InputStream inputStream, AccountService service) {
         super(inputStream);
         this.service = service;
     }
@@ -26,7 +26,7 @@ public class LoginView extends AbstractView {
     }
 
     /**
-     * This method is used to listen for user input. The LoginService is used to authenticate
+     * This method is used to listen for user input. The AccountService is used to authenticate
      * the user. If the user enters 'exit' into the username field, the program leaves.
      *
      * @return       returns a string that decides if the user was a student or a faculty member
@@ -55,7 +55,7 @@ public class LoginView extends AbstractView {
 
                 return type;
 
-            } catch (AuthenticationException e) {
+            } catch (AuthenticationFailedException e) {
                 System.out.println("Your username and password did not match our records, please try again.");
             }
         }
