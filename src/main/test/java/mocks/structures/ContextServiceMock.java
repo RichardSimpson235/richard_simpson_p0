@@ -11,7 +11,7 @@ public class ContextServiceMock extends ContextService {
 
     @Override
     public Context getContext() {
-        return null;
+        return new Context(null);
     }
 
     @Override
