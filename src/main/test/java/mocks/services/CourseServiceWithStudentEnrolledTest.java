@@ -2,13 +2,15 @@ package main.test.java.mocks.services;
 
 import main.java.exceptions.FailedEnrollmentException;
 import main.java.models.Course;
+import main.java.repositories.CourseRepository;
+import main.java.services.ContextService;
 import main.java.services.CourseService;
 import main.java.structures.List;
 import main.test.java.mocks.models.CourseMock;
 
-public class CourseServiceMock extends CourseService {
+public class CourseServiceWithStudentEnrolledTest extends CourseService {
 
-    public CourseServiceMock() {
+    public CourseServiceWithStudentEnrolledTest() {
         super(null, null);
     }
 
@@ -34,12 +36,12 @@ public class CourseServiceMock extends CourseService {
     }
 
     @Override
-    public void enrollUser() throws FailedEnrollmentException {
+    public void unenrollUser() throws FailedEnrollmentException {
     }
 
     @Override
     public boolean isUserEnrolled() {
-        return false;
+        return true;
     }
 
     @Override
