@@ -43,7 +43,7 @@ public class CourseCreationView extends AbstractView {
                 return description;
             }
 
-            System.out.println("When does enrollment for this class start?");
+            System.out.println("When does enrollment for this class start? Enter date: MM/dd/yyyy");
             String enrollmentStartDate = scanner.nextLine();
             if (enrollmentStartDate.equalsIgnoreCase("exit")) {
                 scanner.close();
@@ -51,7 +51,7 @@ public class CourseCreationView extends AbstractView {
                 return enrollmentStartDate;
             }
 
-            System.out.println("When does enrollment for this class end?");
+            System.out.println("When does enrollment for this class end? Enter date: MM/dd/yyyy");
             String enrollmentEndDate = scanner.nextLine();
             if (enrollmentEndDate.equalsIgnoreCase("exit")) {
                 scanner.close();
@@ -59,7 +59,7 @@ public class CourseCreationView extends AbstractView {
                 return enrollmentEndDate;
             }
 
-            DateFormat dateFormat = new SimpleDateFormat();
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
             try {
                 long enrollmentStartDateLong = dateFormat.parse(enrollmentStartDate).getTime();
