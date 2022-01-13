@@ -24,4 +24,8 @@ public class CourseServiceMock extends CourseService {
     @Override
     public void selectCourse(int index) {
     }
+
+    @Override
+    public void createCourse(String courseName, String description, long enrollmentPeriodStart, long enrollmentPeriodEnd) {
+    }
 }
