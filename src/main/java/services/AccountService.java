@@ -37,4 +37,8 @@ public class AccountService {
     public String getAccountName() {
         return this.user.getName();
     }
+
+    public void viewCourse(Course course) {
+        this.contextService.getContext().course = course;
+    }
 }
