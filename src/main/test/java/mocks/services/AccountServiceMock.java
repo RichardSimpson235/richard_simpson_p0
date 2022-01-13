@@ -5,6 +5,7 @@ import main.java.exceptions.RegistrationFailedException;
 import main.java.models.Course;
 import main.java.services.AccountService;
 import main.java.structures.List;
+import main.test.java.mocks.models.CourseMock;
 
 public class AccountServiceMock extends AccountService {
 
@@ -29,11 +30,18 @@ public class AccountServiceMock extends AccountService {
 
     @Override
     public List<Course> getCourses() {
-        return super.getCourses();
+        List<Course> list = new List<>();
+        list.add(new CourseMock());
+
+        return list;
     }
 
     @Override
     public String getAccountName() {
-        return super.getAccountName();
+        return "student name";
+    }
+
+    @Override
+    public void viewCourse(Course course) {
     }
 }
