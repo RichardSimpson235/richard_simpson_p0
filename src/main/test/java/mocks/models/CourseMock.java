@@ -8,4 +8,9 @@ public class CourseMock extends Course {
     public String toString() {
         return "mock course";
     }
+
+    @Override
+    public boolean isValidField(String input) {
+        return true;
+    }
 }

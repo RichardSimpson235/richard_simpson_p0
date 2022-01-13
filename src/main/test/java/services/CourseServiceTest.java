@@ -3,7 +3,7 @@ package main.test.java.services;
 import main.java.exceptions.FailedEnrollmentException;
 import main.java.services.CourseService;
 import main.test.java.mocks.repositories.CourseRepositoryMock;
-import main.test.java.mocks.structures.ContextServiceMock;
+import main.test.java.mocks.services.ContextServiceMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;

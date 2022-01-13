@@ -20,7 +20,7 @@ public class CourseCreationViewTest {
     }
 
     @Test
-//    @Disabled
+    @Disabled
     public void testRender() {
         ByteArrayInputStream input = new ByteArrayInputStream("".getBytes());
         CourseCreationView view = new CourseCreationView(input, courseServiceMock);
