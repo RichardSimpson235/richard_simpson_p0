@@ -71,7 +71,7 @@ public class CourseDetailView extends AbstractView {
                 System.out.println("Course: " + course.getName() + " was deleted!");
                 scanner.close();
 
-                return this.service.isUserFaculty() ? "faculty" : "student";
+                return "faculty";
             } else if(course.isValidField(input)) {
                 System.out.println("What would you like to change it to?");
                 String newFieldData = scanner.nextLine();
