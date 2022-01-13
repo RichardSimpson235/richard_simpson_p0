@@ -6,7 +6,7 @@ import main.java.services.AccountService;
 import main.test.java.mocks.repositories.UserFacultyRepositoryMock;
 import main.test.java.mocks.repositories.UserRepositoryAccountRegisterFailMock;
 import main.test.java.mocks.repositories.UserStudentRepositoryMock;
-import main.test.java.mocks.structures.ContextServiceMock;
+import main.test.java.mocks.services.ContextServiceMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,4 +1,4 @@
-package main.test.java.mocks.structures;
+package main.test.java.mocks.services;
 
 import main.java.services.ContextService;
 import main.java.structures.Context;
