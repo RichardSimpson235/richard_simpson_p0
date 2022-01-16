@@ -165,13 +165,4 @@ public class CourseRepository extends AbstractRepository {
 
         return course;
     }
-
-    private void update(Course course, ResultSet rs) throws SQLException {
-        course.setCourseId(rs.getInt("course_id"));
-        course.setName(rs.getString("name"));
-        course.setDescription(rs.getString("description"));
-        course.setEnrollmentStartDate(rs.getLong("enrollment_start"));
-        course.setEnrollmentEndDate(rs.getLong("enrollment_end"));
-        course.setCredits(rs.getInt("credits"));
-    }
 }
