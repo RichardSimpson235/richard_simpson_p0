@@ -17,7 +17,7 @@ public class CourseRepository extends AbstractRepository {
     }
 
     public boolean create(Course course) throws SQLException {
-        String sql = "INSERT INTO courses VALUES (default, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO courses VALUES (default, ?, ?, ?, ?, ?) RETURNING course_id;";
         PreparedStatement query = this.connection.prepareStatement(sql);
         query.setString(1, course.getName());
         query.setString(2, course.getDescription());
