@@ -59,45 +59,22 @@ public class CourseRepository extends AbstractRepository {
         }
     }
 
-    public Course edit(Course course, String fieldName, int fieldData) throws SQLException {
-        String sql = "UPDATE courses SET ? = ? WHERE course_id = ?;";
+    public boolean edit(Course course) throws SQLException {
+        String sql = "UPDATE courses SET name = ?, description = ?, enrollment_start = ?, enrollment_end = ?, credits = ? WHERE course_id = ?;";
         PreparedStatement query = this.connection.prepareStatement(sql);
-        query.setString(1, fieldName);
-        query.setInt(2, fieldData);
-        query.setInt(3, course.getCourseId());
+        query.setString(1, course.getName());
+        query.setString(2, course.getDescription());
+        query.setLong(3, course.getEnrollmentStartDate());
+        query.setLong(4, course.getEnrollmentEndDate());
+        query.setInt(5, course.getCredits());
+        query.setInt(6, course.getCourseId());
 
-        ResultSet rs = query.executeQuery();
-
-        if(rs.next()) {
-            rs.close();
-            return build(rs);
+        int rows = query.executeUpdate();
+        if(rows == 1) {
+            return true;
         } else {
-            throw new SQLException("Course modification failed.");
+            throw new SQLException("Course update failed.");
         }
-    }
-
-    public Course edit(Course course, String fieldName, long fieldData) throws SQLException {
-        String sql = "UPDATE courses SET ? = ? WHERE course_id = ?;";
-        PreparedStatement query = this.connection.prepareStatement(sql);
-        query.setString(1, fieldName);
-        query.setLong(2, fieldData);
-        query.setInt(3, course.getCourseId());
-
-        ResultSet rs = query.executeQuery();
-
-        return build(rs);
-    }
-
-    public Course edit(Course course, String fieldName, String fieldData) throws SQLException {
-        String sql = "UPDATE courses SET ? = ? WHERE course_id = ?;";
-        PreparedStatement query = this.connection.prepareStatement(sql);
-        query.setString(1, fieldName);
-        query.setString(2, fieldData);
-        query.setInt(3, course.getCourseId());
-
-        ResultSet rs = query.executeQuery();
-
-        return build(rs);
     }
 
     public List<Course> getAllCourses() throws SQLException {
@@ -184,6 +161,17 @@ public class CourseRepository extends AbstractRepository {
         course.setEnrollmentEndDate(rs.getLong("enrollment_end"));
         course.setCredits(rs.getInt("credits"));
 
+        rs.close();
+
         return course;
+    }
+
+    private void update(Course course, ResultSet rs) throws SQLException {
+        course.setCourseId(rs.getInt("course_id"));
+        course.setName(rs.getString("name"));
+        course.setDescription(rs.getString("description"));
+        course.setEnrollmentStartDate(rs.getLong("enrollment_start"));
+        course.setEnrollmentEndDate(rs.getLong("enrollment_end"));
+        course.setCredits(rs.getInt("credits"));
     }
 }
