@@ -92,9 +92,9 @@ public class CourseRepository extends AbstractRepository {
                 "SELECT * FROM employees INNER JOIN assignments USING (employee_id) ORDER BY course_id;";
 
         PreparedStatement courseStatement = this.connection.prepareStatement(coursesSql);
-        PreparedStatement instructorStatement = this.connection.prepareStatement(instructorSql);
+        PreparedStatement instructorStatement = this.connection.prepareStatement(instructorSql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet courseSet = courseStatement.executeQuery();
-        ResultSet instructorSet = instructorStatement.executeQuery();
+        ResultSet facultySet = instructorStatement.executeQuery();
 
         List<Course> courses = new List<>();
         Course currentCourse = null;
@@ -120,7 +120,14 @@ public class CourseRepository extends AbstractRepository {
                 if (currentCourse != null) {
                     courses.add(currentCourse);
                 }
-                currentCourse = build(courseSet);
+                currentCourse = new Course();
+                currentCourse.setCourseId(courseSet.getInt("course_id"));
+                currentCourse.setName(courseSet.getString("name"));
+                currentCourse.setDescription(courseSet.getString("description"));
+                currentCourse.setEnrollmentStartDate(courseSet.getLong("enrollment_start"));
+                currentCourse.setEnrollmentEndDate(courseSet.getLong("enrollment_end"));
+                currentCourse.setCredits(courseSet.getInt("credits"));
+
                 Student student = new Student();
                 student.setUserId(courseSet.getInt("user_id"));
                 student.setFirstName(courseSet.getString("first_name"));
@@ -132,16 +139,25 @@ public class CourseRepository extends AbstractRepository {
                 student.setMealPlanTier(courseSet.getInt("meal_plan_tier"));
                 student.setMajor(courseSet.getString("major"));
 
+
                 Faculty faculty = new Faculty();
-                faculty.setUserId(instructorSet.getInt("user_id"));
-                faculty.setFirstName(instructorSet.getString("first_name"));
-                faculty.setLastName(instructorSet.getString("last_name"));
-                faculty.setEmail(instructorSet.getString("email"));
-                faculty.setDateOfBirth(instructorSet.getLong("date_of_birth"));
-                faculty.setUsername(instructorSet.getString("username"));
-                faculty.setPassword(instructorSet.getString("password"));
-                faculty.setSalary(instructorSet.getInt("salary"));
-                faculty.setDepartment(instructorSet.getString("department"));
+                while(facultySet.next()) {
+                    if(facultySet.getInt("course_id") == currentCourse.getCourseId()) {
+                        faculty.setUserId(facultySet.getInt("user_id"));
+                        faculty.setFirstName(facultySet.getString("first_name"));
+                        faculty.setLastName(facultySet.getString("last_name"));
+                        faculty.setEmail(facultySet.getString("email"));
+                        faculty.setDateOfBirth(facultySet.getLong("date_of_birth"));
+                        faculty.setUsername(facultySet.getString("username"));
+                        faculty.setPassword(facultySet.getString("password"));
+                        faculty.setSalary(facultySet.getInt("salary"));
+                        faculty.setDepartment(facultySet.getString("department"));
+
+                        // reposition cursor to start before first row to loop through again
+                        facultySet.beforeFirst();
+                        break;
+                    }
+                }
 
                 currentCourse.addStudent(student);
                 currentCourse.setProfessor(faculty);
@@ -149,20 +165,5 @@ public class CourseRepository extends AbstractRepository {
         }
 
         return courses;
-    }
-
-    private Course build(ResultSet rs) throws SQLException {
-        Course course = new Course();
-
-        course.setCourseId(rs.getInt("course_id"));
-        course.setName(rs.getString("name"));
-        course.setDescription(rs.getString("description"));
-        course.setEnrollmentStartDate(rs.getLong("enrollment_start"));
-        course.setEnrollmentEndDate(rs.getLong("enrollment_end"));
-        course.setCredits(rs.getInt("credits"));
-
-        rs.close();
-
-        return course;
     }
 }
