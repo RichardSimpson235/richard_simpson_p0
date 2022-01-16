@@ -16,7 +16,7 @@ public class UserRepository extends AbstractRepository {
     }
 
     public boolean create(Student student) throws SQLException {
-        String sql = "INSERT INTO users VALUES (default, ?, ? ,?, ?, ?, ?);";
+        String sql = "INSERT INTO users VALUES (default, ?, ? ,?, ?, ?, ?) RETURNING user_id;";
         PreparedStatement query = this.connection.prepareStatement(sql);
         query.setString(1, student.getFirstName());
         query.setString(2, student.getLastName());
@@ -34,16 +34,11 @@ public class UserRepository extends AbstractRepository {
             query.setString(2, student.getMajor());
             query.setInt(3, rs.getInt("user_id"));
 
-            rs = query.executeQuery();
-
-            if(rs.next()) {
-                rs.close();
-                return true;
-            } else {
-                throw new SQLException("Student account creation failed.");
-            }
+            int rows = query.executeUpdate();
+            rs.close();
+            return rows == 1;
         } else {
-            throw new SQLException("User account creation failed.");
+            throw new SQLException("Student creation failed.");
         }
     }
 
