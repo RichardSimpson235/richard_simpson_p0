@@ -50,10 +50,9 @@ public class CourseRepository extends AbstractRepository {
         PreparedStatement query = this.connection.prepareStatement(sql);
         query.setInt(1, course.getCourseId());
 
-        ResultSet rs = query.executeQuery();
+        int rows = query.executeUpdate();
 
-        if(!rs.next()) {
-            rs.close();
+        if(rows == 1) {
             return true;
         } else {
             throw new SQLException("Course deletion failed.");
