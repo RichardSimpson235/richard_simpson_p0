@@ -84,4 +84,12 @@ public class Course {
     public void removeStudent(Student student) {
         this.students.remove(student);
     }
+
+    public boolean isProfessor(Faculty faculty) {
+        return faculty.getUserId() == this.professor.getUserId();
+    }
+
+    public boolean isEnrolled(Student student) {
+        return this.students.contains(student);
+    }
 }

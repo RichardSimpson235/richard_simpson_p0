@@ -11,7 +11,7 @@ public abstract class User {
     private long dateOfBirth;
     private String username;
     private String password;
-    List<Course> courses;
+    private List<Course> courses;
 
     public User() {
         courses = new List<>();
@@ -79,10 +79,29 @@ public abstract class User {
         }
     }
 
+    public List<Course> getCourses() {
+        return this.courses;
+    }
+
     public void removeCourse(Course course) {
         if(this.courses.contains(course)) {
             this.courses.remove(course);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+
+        if(!(obj instanceof User)) {
+            return false;
+        }
+
+        User o = (User) obj;
+
+        return o.getUserId() == this.userId;
     }
 
     public abstract String getType();
