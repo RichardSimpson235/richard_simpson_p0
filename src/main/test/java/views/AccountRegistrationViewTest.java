@@ -11,26 +11,27 @@ import java.io.ByteArrayInputStream;
 
 public class AccountRegistrationViewTest {
 
-    private AccountServiceMock mockService;
+    private AccountServiceMock mockServiceStudent;
 
     @BeforeEach
     public void init() {
-        mockService = new AccountServiceMock();
+
+        mockServiceStudent = new AccountServiceMock(null, null, null, "student");
     }
 
     @Test
     @Disabled
     public void testRender() {
         ByteArrayInputStream input = new ByteArrayInputStream("".getBytes());
-        AccountRegistrationView view = new AccountRegistrationView(input, mockService);
+        AccountRegistrationView view = new AccountRegistrationView(input, mockServiceStudent);
         view.render();
         assert true;
     }
 
     @Test
     public void testStringInput() {
-        ByteArrayInputStream input = new ByteArrayInputStream("richard\nsimpson\n29\nusername\npassword".getBytes());
-        AccountRegistrationView view = new AccountRegistrationView(input, mockService);
+        ByteArrayInputStream input = new ByteArrayInputStream("richard\nsimpson\nrsimpson@gmail.com\n02/24/1992\nrsimpson\npassword\n1\nMath".getBytes());
+        AccountRegistrationView view = new AccountRegistrationView(input, mockServiceStudent);
 
         String output = view.listen();
         assertEquals(output, "landing");
@@ -39,7 +40,7 @@ public class AccountRegistrationViewTest {
     @Test
     public void testExit() {
         ByteArrayInputStream input = new ByteArrayInputStream("richard\nsimpson\nexit\nusername\npassword".getBytes());
-        AccountRegistrationView view = new AccountRegistrationView(input, mockService);
+        AccountRegistrationView view = new AccountRegistrationView(input, mockServiceStudent);
 
         String output = view.listen();
         assertEquals(output, "exit");

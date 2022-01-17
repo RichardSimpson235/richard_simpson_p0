@@ -16,7 +16,7 @@ public class CourseRegistryViewTest {
 
     @BeforeEach
     public void init() {
-        this.courseServiceMock = new CourseServiceMock();
+        this.courseServiceMock = new CourseServiceMock(null);
     }
 
     @Test
@@ -41,6 +41,8 @@ public class CourseRegistryViewTest {
         ByteArrayInputStream input = new ByteArrayInputStream("1\ny".getBytes());
         CourseRegistryView view = new CourseRegistryView(input, courseServiceMock);
 
+        // have to call render to populate course list
+        view.render();
         assertEquals(view.listen(), "detail");
     }
 }

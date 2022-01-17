@@ -2,6 +2,7 @@ package main.test.java.views;
 
 import main.java.views.StudentView;
 import main.test.java.mocks.services.AccountServiceMock;
+import main.test.java.mocks.services.CourseServiceMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -12,18 +13,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StudentViewTest {
 
-    private AccountServiceMock mockService;
+    private AccountServiceMock accountServiceMock;
+    private CourseServiceMock courseServiceMock;
 
     @BeforeEach
     public void init() {
-        mockService = new AccountServiceMock();
+        this.accountServiceMock = new AccountServiceMock(null, null, null, "student");
+        this.courseServiceMock = new CourseServiceMock(null);
     }
 
     @Test
     @Disabled
     public void testRender() {
         ByteArrayInputStream input = new ByteArrayInputStream("".getBytes());
-        StudentView view = new StudentView(input, mockService);
+        StudentView view = new StudentView(input, accountServiceMock, this.courseServiceMock);
         view.render();
         assert true;
     }
@@ -31,7 +34,7 @@ public class StudentViewTest {
     @Test
     public void testListenWithExit() {
         ByteArrayInputStream input = new ByteArrayInputStream("exit".getBytes());
-        StudentView view = new StudentView(input, mockService);
+        StudentView view = new StudentView(input, accountServiceMock, this.courseServiceMock);
 
         assertEquals(view.listen(), "exit");
     }
@@ -39,7 +42,7 @@ public class StudentViewTest {
     @Test
     public void testListenWithEnroll() {
         ByteArrayInputStream input = new ByteArrayInputStream("enroll".getBytes());
-        StudentView view = new StudentView(input, mockService);
+        StudentView view = new StudentView(input, accountServiceMock, this.courseServiceMock);
 
         assertEquals(view.listen(), "enroll");
     }
@@ -47,8 +50,10 @@ public class StudentViewTest {
     @Test
     public void testListenWithViewAndValidClass() {
         ByteArrayInputStream input = new ByteArrayInputStream("view\n1\ny".getBytes());
-        StudentView view = new StudentView(input, mockService);
+        StudentView view = new StudentView(input, accountServiceMock, this.courseServiceMock);
 
+        // need to call render to populate course list
+        view.render();
         assertEquals(view.listen(), "detail");
     }
 }

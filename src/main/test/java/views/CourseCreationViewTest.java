@@ -1,6 +1,8 @@
 package main.test.java.views;
 
+import main.java.services.AccountService;
 import main.java.views.CourseCreationView;
+import main.test.java.mocks.services.AccountServiceMock;
 import main.test.java.mocks.services.CourseServiceMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -13,17 +15,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CourseCreationViewTest {
 
     private CourseServiceMock courseServiceMock;
+    private AccountServiceMock accountServiceMock;
 
     @BeforeEach
     public void init() {
-        this.courseServiceMock = new CourseServiceMock();
+        this.accountServiceMock = new AccountServiceMock(null, null, null, "faculty");
+        this.courseServiceMock = new CourseServiceMock(null);
     }
 
     @Test
     @Disabled
     public void testRender() {
         ByteArrayInputStream input = new ByteArrayInputStream("".getBytes());
-        CourseCreationView view = new CourseCreationView(input, courseServiceMock);
+        CourseCreationView view = new CourseCreationView(input, this.accountServiceMock, this.courseServiceMock);
         view.render();
         assert true;
     }
@@ -31,15 +35,15 @@ public class CourseCreationViewTest {
     @Test
     public void testListenWithExit() {
         ByteArrayInputStream input = new ByteArrayInputStream("exit".getBytes());
-        CourseCreationView view = new CourseCreationView(input, courseServiceMock);
+        CourseCreationView view = new CourseCreationView(input, this.accountServiceMock, this.courseServiceMock);
 
         assertEquals(view.listen(), "exit");
     }
 
     @Test
     public void testValidInput() {
-        ByteArrayInputStream input = new ByteArrayInputStream("Linear Algebra\nMath\n01/13/2022\n01/14/2022".getBytes());
-        CourseCreationView view = new CourseCreationView(input, courseServiceMock);
+        ByteArrayInputStream input = new ByteArrayInputStream("Linear Algebra\ndescription\n01/13/2022\n01/14/2022\n3".getBytes());
+        CourseCreationView view = new CourseCreationView(input, this.accountServiceMock, this.courseServiceMock);
 
         assertEquals(view.listen(), "faculty");
     }

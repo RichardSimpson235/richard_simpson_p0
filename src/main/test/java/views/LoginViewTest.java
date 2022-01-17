@@ -15,18 +15,20 @@ import java.util.NoSuchElementException;
 
 public class LoginViewTest {
 
-    private AccountServiceMock mockService;
+    private AccountServiceMock accountServiceMockFaculty;
+    private AccountServiceMock accountServiceMockStudent;
 
     @BeforeEach
     public void init() {
-        mockService = new AccountServiceMock();
+        this.accountServiceMockStudent = new AccountServiceMock(null, null, null, "student");
+        this.accountServiceMockFaculty = new AccountServiceMock(null, null, null, "faculty");
     }
 
     @Test
     @Disabled
     public void testRender() {
-        ByteArrayInputStream input = new ByteArrayInputStream("login".getBytes());
-        LoginView view = new LoginView(input, mockService);
+        ByteArrayInputStream input = new ByteArrayInputStream("".getBytes());
+        LoginView view = new LoginView(input, accountServiceMockFaculty);
         view.render();
         assert true;
     }
@@ -34,7 +36,7 @@ public class LoginViewTest {
     @Test
     public void testListenWithExit() {
         ByteArrayInputStream input = new ByteArrayInputStream("exit\npassword".getBytes());
-        LoginView view = new LoginView(input, mockService);
+        LoginView view = new LoginView(input, accountServiceMockFaculty);
 
         assertEquals(view.listen(), "exit");
     }
@@ -42,7 +44,7 @@ public class LoginViewTest {
     @Test
     public void testListenWithStudent() {
         ByteArrayInputStream input = new ByteArrayInputStream("student\npassword".getBytes());
-        LoginView view = new LoginView(input, mockService);
+        LoginView view = new LoginView(input, accountServiceMockStudent);
 
         assertEquals(view.listen(), "student");
     }
@@ -50,7 +52,7 @@ public class LoginViewTest {
     @Test
     public void testListenWithFaculty() {
         ByteArrayInputStream input = new ByteArrayInputStream("faculty\npassword".getBytes());
-        LoginView view = new LoginView(input, mockService);
+        LoginView view = new LoginView(input, accountServiceMockFaculty);
 
         assertEquals(view.listen(), "faculty");
     }
@@ -61,7 +63,7 @@ public class LoginViewTest {
     @DisplayName("Should print a message to console when authentication fails.")
     public void testListenAuthenticationFailure() {
         ByteArrayInputStream input = new ByteArrayInputStream("asdf\npassword".getBytes());
-        LoginView view = new LoginView(input, mockService);
+        LoginView view = new LoginView(input, accountServiceMockFaculty);
 
         assertThrows(NoSuchElementException.class, () -> {
             view.listen();
