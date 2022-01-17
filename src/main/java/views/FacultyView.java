@@ -1,5 +1,6 @@
 package main.java.views;
 
+import main.java.services.CourseService;
 import main.java.structures.List;
 import main.java.services.AccountService;
 import main.java.models.Course;
@@ -9,36 +10,41 @@ import java.util.Scanner;
 
 public class FacultyView extends AbstractView {
 
-    private final AccountService service;
+    private final AccountService accountService;
+    private final CourseService courseService;
+    private List<Course> courses;
 
-    public FacultyView(InputStream inputStream, AccountService service) {
+    public FacultyView(InputStream inputStream, AccountService accountService, CourseService courseService) {
         super(inputStream);
-        this.service = service;
+        this.accountService = accountService;
+        this.courseService = courseService;
     }
 
     @Override
     public void render() {
         System.out.println("==========================================");
-         List<Course> courses = service.getCourses();
+         this.courses = accountService.getCourses();
 
-        System.out.println("Welcome " + service.getAccountName() + "!");
-        if(courses.isEmpty()) {
+        System.out.println("Welcome " + accountService.getUserName() + "!");
+        if(this.courses.isEmpty()) {
             System.out.println("You have not created any courses yet.");
         } else {
             System.out.println("You have created the following courses:");
-            for(int i = 1; i <=  courses.size(); i++) {
-                System.out.println(i + ". " + courses.get(i - 1));
+            for(int i = 1; i <=  this.courses.size(); i++) {
+                renderCourse(this.courses.get(i));
             }
 
-            if(courses.size() != 0) {
+            if(this.courses.size() != 0) {
                 System.out.println("If you would like to edit one of your classes, please enter an integer in the list " +
                         "(for example press 1 for " +
-                        courses.get(0) + (courses.size() > 1 ? ", 2 for " + courses.get(1) + ", etc)." : ")"));
+                        this.courses.get(0) + (this.courses.size() > 1 ? ", 2 for " + this.courses.get(1) + ", etc)." : ")"));
             }
         }
 
         System.out.println("If you would like to add a new class, please enter 'new'.");
     }
+
+    private void renderCourse(Course course) {}
 
     @Override
     public String listen() {
@@ -56,13 +62,13 @@ public class FacultyView extends AbstractView {
                 int index = Integer.parseInt(input);
 
                 try {
-                    Course course = service.getCourses().get(index - 1);
+                    Course course = accountService.getCourses().get(index - 1);
                     System.out.println("You've selected: " + input + ". " + course.getName() + ". Is this correct? (y/n)");
 
                     input = scanner.nextLine();
                     if(input.equalsIgnoreCase("y")) {
                         scanner.close();
-                        service.viewCourse(course);
+                        courseService.selectCourse(course);
 
                         return "detail";
                     } else if(!input.equalsIgnoreCase("n")) {
