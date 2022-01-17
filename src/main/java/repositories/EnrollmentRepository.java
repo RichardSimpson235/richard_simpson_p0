@@ -1,6 +1,7 @@
 package main.java.repositories;
 
 import main.java.models.Course;
+import main.java.models.Faculty;
 import main.java.models.Student;
 
 import java.sql.Connection;
@@ -12,6 +13,21 @@ public class EnrollmentRepository extends AbstractRepository {
 
     public EnrollmentRepository(Connection connection) {
         super(connection);
+    }
+
+    public boolean assign(Faculty faculty, Course course) throws SQLException {
+        String sql = "INSERT INTO assignments VALUES (?, ?);";
+        PreparedStatement query = this.connection.prepareStatement(sql);
+        query.setInt(1, faculty.getEmployeeId());
+        query.setInt(2, course.getCourseId());
+
+        ResultSet rs = query.executeQuery();
+
+        if(rs.next()) {
+            return true;
+        } else {
+            throw new SQLException("Assignment creation failed.");
+        }
     }
 
     public boolean create(Student student, Course course) throws SQLException {
