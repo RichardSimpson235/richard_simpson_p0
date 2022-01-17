@@ -14,6 +14,7 @@ import main.java.repositories.UserRepository;
 import main.java.structures.List;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 public class AccountService {
 
@@ -89,7 +90,12 @@ public class AccountService {
 
     public void enroll(Course course) throws EnrollmentFailedException {
         try {
-            this.enrollmentRepository.create((Student) this.user, course);
+            Date today = new Date();
+            if(today.getTime() > course.getEnrollmentStartDate() && today.getTime() < course.getEnrollmentEndDate()) {
+                this.enrollmentRepository.create((Student) this.user, course);
+            } else {
+                throw new EnrollmentFailedException();
+            }
         } catch (SQLException e) {
             throw new EnrollmentFailedException();
         }
@@ -105,5 +111,17 @@ public class AccountService {
 
     public List<Course> getCourses() {
         return this.user.getCourses();
+    }
+
+    public String getUserName() {
+        return this.user.getFirstName() + " " + this.user.getLastName();
+    }
+
+    public boolean isUserFaculty() {
+        return this.user.getType().equals("faculty");
+    }
+
+    public User getUser() {
+        return this.user;
     }
 }
