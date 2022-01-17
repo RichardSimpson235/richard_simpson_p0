@@ -1,6 +1,6 @@
 package main.java.views;
 
-import main.java.exceptions.AuthenticationFailedException;
+import main.java.exceptions.MissingAccountException;
 import main.java.services.AccountService;
 
 import java.io.InputStream;
@@ -47,6 +47,9 @@ public class LoginView extends AbstractView {
             System.out.println();
             System.out.println("Password: ");
             String password = scanner.nextLine();
+            if (password.equalsIgnoreCase("exit")) {
+                return password;
+            }
 
             try {
 
@@ -55,7 +58,7 @@ public class LoginView extends AbstractView {
 
                 return type;
 
-            } catch (AuthenticationFailedException e) {
+            } catch (MissingAccountException e) {
                 System.out.println("Your username and password did not match our records, please try again.");
             }
         }
