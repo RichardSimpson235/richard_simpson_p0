@@ -1,11 +1,9 @@
 package main.java.services;
 
-import main.java.exceptions.CourseModificationException;
-import main.java.exceptions.CreationFailedException;
-import main.java.exceptions.DeletionFailedException;
-import main.java.exceptions.InvalidFieldException;
+import main.java.exceptions.*;
 import main.java.models.Course;
 import main.java.repositories.CourseRepository;
+import main.java.structures.List;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -23,7 +21,7 @@ public class CourseService {
 
     public void createCourse(String name, String description, long enrollmentStart, long enrollmentEnd, int credits) throws CreationFailedException {
 
-        Course course = new Course();
+        this.course = new Course();
 
         course.setName(name);
         course.setDescription(description);
@@ -32,7 +30,7 @@ public class CourseService {
         course.setCredits(credits);
 
         try {
-            if(!this.courseRepository.create(course)) {
+            if(!this.courseRepository.create(this.course)) {
                 throw new CreationFailedException();
             }
         } catch (SQLException e) {
@@ -52,7 +50,7 @@ public class CourseService {
         }
     }
 
-    public void editCourse(String fieldName, String fieldData) throws ParseException, InvalidFieldException, CourseModificationException {
+    public void editCourse(String fieldName, String fieldData) throws ParseException, InvalidFieldException, CourseModificationException, NumberFormatException {
 
         DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         switch(fieldName.toLowerCase()) {
@@ -88,5 +86,13 @@ public class CourseService {
 
     public Course getCourse() {
         return this.course;
+    }
+
+    public List<Course> getAllCourses() throws CourseRetrievalException {
+        try {
+            return this.courseRepository.getAllCourses();
+        } catch (SQLException e) {
+            throw new CourseRetrievalException();
+        }
     }
 }
