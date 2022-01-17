@@ -5,9 +5,13 @@ import main.java.models.Course;
 import main.java.models.Student;
 import main.java.services.AccountService;
 import main.java.services.CourseService;
+import main.java.structures.List;
 
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class CourseDetailView extends AbstractView {
@@ -30,7 +34,33 @@ public class CourseDetailView extends AbstractView {
         renderCourse(this.course);
     }
 
-    public void renderCourse(Course course) {}
+    public void renderCourse(Course course) {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        System.out.println("==================================");
+        System.out.println("Name: " + course.getName());
+        System.out.println("Description: " + course.getDescription());
+        System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
+        System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
+        System.out.println("Credits: " + course.getCredits());
+
+        if(this.accountService.isUserFaculty()) {
+            // Construct list of students enrolled in the class
+            List<Student> students = course.getStudents();
+            StringBuilder output = new StringBuilder("Students: ");
+            for (int i = 0; i < students.size(); i++) {
+                output.append(students.get(i).getFirstName());
+                output.append(" ");
+                output.append(students.get(i).getLastName());
+                output.append(i != students.size() - 1 ? ", " : "");
+            }
+
+            System.out.println(output);
+        } else {
+            // Then they're a faculty member, so we just need their name
+            System.out.println("Instructor: " + course.getProfessor().getFirstName() + " " + course.getProfessor().getLastName());
+        }
+        System.out.println("==================================");
+    }
 
     @Override
     public String listen() {

@@ -6,6 +6,9 @@ import main.java.models.Course;
 import main.java.services.AccountService;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class StudentView extends AbstractView {
@@ -43,7 +46,15 @@ public class StudentView extends AbstractView {
     }
 
     private void renderCourse(Course course) {
-        System.out.println("Course: " + course.getName() +  " goes here");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        System.out.println("==================================");
+        System.out.println("Name: " + course.getName());
+        System.out.println("Description: " + course.getDescription());
+        System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
+        System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
+        System.out.println("Credits: " + course.getCredits());
+        System.out.println("Instructor: " + course.getProfessor().getFirstName() + " " + course.getProfessor().getLastName());
+        System.out.println("==================================");
     }
 
     @Override

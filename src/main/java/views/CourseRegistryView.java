@@ -1,11 +1,15 @@
 package main.java.views;
 
 import main.java.exceptions.CourseRetrievalException;
+import main.java.models.Student;
 import main.java.structures.List;
 import main.java.models.Course;
 import main.java.services.CourseService;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class CourseRegistryView extends AbstractView {
@@ -34,7 +38,17 @@ public class CourseRegistryView extends AbstractView {
         }
     }
 
-    private void renderCourse(Course course) {}
+    private void renderCourse(Course course) {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        System.out.println("==================================");
+        System.out.println("Name: " + course.getName());
+        System.out.println("Description: " + course.getDescription());
+        System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
+        System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
+        System.out.println("Credits: " + course.getCredits());
+        System.out.println("Instructor: " + course.getProfessor().getFirstName() + " " + course.getProfessor().getLastName());
+        System.out.println("==================================");
+    }
 
     @Override
     public String listen() {
