@@ -92,4 +92,17 @@ public class Course {
     public boolean isEnrolled(Student student) {
         return this.students.contains(student);
     }
+
+    public boolean isValidField(String input) {
+        switch(input.toLowerCase()) {
+            case "name":
+            case "description":
+            case "start":
+            case "end":
+            case "credits":
+                return true;
+            default:
+                return false;
+        }
+    }
 }
