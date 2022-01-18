@@ -45,7 +45,7 @@ public class StudentView extends AbstractView {
                 System.out.println("If you would like to see the details of a class please enter 'view'.");
             }
         }
-        System.out.println("If you would like to enroll in a class please enter 'enroll'.");
+        System.out.println("If you would like to view the registry of all classes please type 'registry'.");
 
     }
 
@@ -66,13 +66,13 @@ public class StudentView extends AbstractView {
         while (true) {
             String input = scanner.nextLine();
 
-            if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("enroll")) {
+            if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("registry")) {
 
                 return input;
             } else if(input.equalsIgnoreCase("view")) {
                 try {
                     System.out.println("Please enter an integer of the class list (for example press 1 for " +
-                            courses.get(0) + (courses.size() > 1 ? ", 2 for " + courses.get(1) + ", etc)." : ""));
+                            courses.get(0).getName() + (courses.size() > 1 ? ", 2 for " + courses.get(1).getName() + ", etc)." : "") + ")");
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("It seems the list of courses is empty, please enroll in courses first.");
                 }
@@ -101,6 +101,8 @@ public class StudentView extends AbstractView {
                 } catch (NumberFormatException e) {
                     System.out.println("It seems you didn't enter an integer. Please enter an integer.");
                 }
+            } else {
+                System.out.println("It seems you entered an unrecognized command, please try again.");
             }
         }
     }

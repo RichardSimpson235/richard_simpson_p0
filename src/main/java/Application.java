@@ -71,7 +71,7 @@ public class Application {
                 case "student":
                     currentView = new StudentView(System.in, accountService, courseService);
                     break;
-                case "enroll":
+                case "registry":
                     currentView = new CourseRegistryView(System.in, courseService);
                     break;
                 case "detail":
