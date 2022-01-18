@@ -114,12 +114,6 @@ public class CourseRepository extends AbstractRepository {
 
                 currentCourse.addStudent(student);
             } else {
-                // Create new course and set it as the currently being build course
-                // if this isn't the first time we've done this block we need to add
-                // the current course to the list as we're about to create a new one
-                if (currentCourse != null) {
-                    courses.add(currentCourse);
-                }
                 currentCourse = new Course();
                 currentCourse.setCourseId(courseSet.getInt("course_id"));
                 currentCourse.setName(courseSet.getString("name"));
@@ -161,6 +155,7 @@ public class CourseRepository extends AbstractRepository {
 
                 currentCourse.addStudent(student);
                 currentCourse.setProfessor(faculty);
+                courses.add(currentCourse);
             }
         }
 
