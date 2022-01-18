@@ -88,6 +88,7 @@ public class CourseDetailView extends AbstractView {
                     accountService.unenroll(this.course);
                 } catch (EnrollmentFailedException e) {
                     System.out.println("Sorry, we were not able to unenroll you from that class.");
+                    System.out.println();
                 }
 
                 return "student";
@@ -96,6 +97,10 @@ public class CourseDetailView extends AbstractView {
                     accountService.enroll(this.course);
                 } catch (EnrollmentFailedException e) {
                     System.out.println("Sorry, we were not able to enroll you in that class.");
+                    System.out.println();
+                } catch (EnrollmentRangeException e) {
+                    System.out.println("We're sorry but you cannot enroll in a class that is past its enrollment period end date.");
+                    System.out.println();
                 }
 
                 return "student";
