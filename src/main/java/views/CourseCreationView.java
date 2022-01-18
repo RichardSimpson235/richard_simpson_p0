@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Scanner;
 
 public class CourseCreationView extends AbstractView {
 
@@ -97,8 +96,10 @@ public class CourseCreationView extends AbstractView {
 
         try {
             courseService.createCourse(name, description, enrollmentStartDateL, enrollmentEndDateL, credits);
+            accountService.assign(courseService.getCourse());
         } catch (CreationFailedException e) {
             System.out.println("We failed to create the course, you may need to try again later.");
+            System.out.println();
         }
 
         return "faculty";
