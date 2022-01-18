@@ -22,6 +22,9 @@ public class CourseRegistryView extends AbstractView {
 
     @Override
     public void render() {
+        System.out.println("====================================================================");
+        System.out.println("========================  COURSE REGISTRY  =========================");
+        System.out.println("====================================================================");
         System.out.println("The following is a list of all of the classes:");
 
         try {
