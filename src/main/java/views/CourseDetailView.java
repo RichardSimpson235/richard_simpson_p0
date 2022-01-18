@@ -89,6 +89,8 @@ public class CourseDetailView extends AbstractView {
                 } catch (EnrollmentFailedException e) {
                     System.out.println("Sorry, we were not able to unenroll you from that class.");
                     System.out.println();
+                } catch (EnrollmentRangeException e) {
+                    System.out.println("You can't unenroll from a class outside of the enrollment period!");
                 }
 
                 return "student";
