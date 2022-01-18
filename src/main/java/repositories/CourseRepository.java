@@ -52,7 +52,7 @@ public class CourseRepository extends AbstractRepository {
 
         int rows = query.executeUpdate();
 
-        if(rows == 1) {
+        if(rows > 0) {
             return true;
         } else {
             throw new SQLException("Course deletion failed.");
@@ -81,10 +81,10 @@ public class CourseRepository extends AbstractRepository {
         String coursesSql = "WITH full_students AS (" +
                 "SELECT * FROM students INNER JOIN users USING (user_id)" +
                 ")," +
-                "enrolls AS (" +
-                "SELECT * FROM courses INNER JOIN enrollments USING (course_id)" +
+                "classes AS (" +
+                "SELECT * FROM courses LEFT JOIN enrollments USING (course_id)" +
                 ")" +
-                "SELECT * FROM enrolls INNER JOIN full_students USING (student_id) ORDER BY course_id;";
+                "SELECT * FROM classes LEFT JOIN full_students USING (student_id) ORDER BY course_id;";
 
         String instructorSql = "WITH employees AS (" +
                 "SELECT * FROM faculty INNER JOIN users USING (user_id)" +
@@ -122,16 +122,20 @@ public class CourseRepository extends AbstractRepository {
                 currentCourse.setEnrollmentEndDate(courseSet.getLong("enrollment_end"));
                 currentCourse.setCredits(courseSet.getInt("credits"));
 
-                Student student = new Student();
-                student.setUserId(courseSet.getInt("user_id"));
-                student.setFirstName(courseSet.getString("first_name"));
-                student.setLastName(courseSet.getString("last_name"));
-                student.setEmail(courseSet.getString("email"));
-                student.setDateOfBirth(courseSet.getLong("date_of_birth"));
-                student.setUsername(courseSet.getString("username"));
-                student.setPassword(courseSet.getString("password"));
-                student.setMealPlanTier(courseSet.getInt("meal_plan_tier"));
-                student.setMajor(courseSet.getString("major"));
+                if(courseSet.getInt("student_id") != 0) {
+                    Student student = new Student();
+                    student.setUserId(courseSet.getInt("user_id"));
+                    student.setFirstName(courseSet.getString("first_name"));
+                    student.setLastName(courseSet.getString("last_name"));
+                    student.setEmail(courseSet.getString("email"));
+                    student.setDateOfBirth(courseSet.getLong("date_of_birth"));
+                    student.setUsername(courseSet.getString("username"));
+                    student.setPassword(courseSet.getString("password"));
+                    student.setMealPlanTier(courseSet.getInt("meal_plan_tier"));
+                    student.setMajor(courseSet.getString("major"));
+
+                    currentCourse.addStudent(student);
+                }
 
 
                 Faculty faculty = new Faculty();
@@ -153,7 +157,6 @@ public class CourseRepository extends AbstractRepository {
                     }
                 }
 
-                currentCourse.addStudent(student);
                 currentCourse.setProfessor(faculty);
                 courses.add(currentCourse);
             }
