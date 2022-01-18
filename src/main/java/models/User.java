@@ -79,15 +79,15 @@ public abstract class User {
         }
     }
 
-    public List<Course> getCourses() {
-        return this.courses;
-    }
-
     public void removeCourse(Course course) {
         if(this.courses.contains(course)) {
             this.courses.remove(course);
         }
     }
+    public List<Course> getCourses() {
+        return this.courses;
+    }
+
 
     @Override
     public boolean equals(Object obj) {
