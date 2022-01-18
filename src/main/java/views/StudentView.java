@@ -44,8 +44,8 @@ public class StudentView extends AbstractView {
             if (this.courses.size() != 0) {
                 System.out.println("If you would like to see the details of a class please enter 'view'.");
             }
-            System.out.println("If you would like to enroll in a class please enter 'enroll'.");
         }
+        System.out.println("If you would like to enroll in a class please enter 'enroll'.");
 
     }
 
