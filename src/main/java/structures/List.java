@@ -35,9 +35,13 @@ public class List<E> {
     }
 
     public void remove(E item) {
-        for (int i = this.size; i >= 0; i--) {
-            if (item == this.array[i]) {
-                System.arraycopy(this.array, i + 1, this.array, i, this.size - i);
+        for (int i = this.size - 1; i >= 0; i--) {
+            if (item.equals(this.array[i])) {
+                if(i == this.size - 1) {
+                    this.array[i] = null;
+                } else {
+                    System.arraycopy(this.array, i + 1, this.array, i, this.size - i);
+                }
                 this.size--;
 
                 break;
