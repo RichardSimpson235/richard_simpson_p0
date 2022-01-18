@@ -36,9 +36,9 @@ public class EnrollmentRepository extends AbstractRepository {
         query.setInt(1, student.getStudentId());
         query.setInt(2, course.getCourseId());
 
-        ResultSet rs = query.executeQuery();
+        int row = query.executeUpdate();
 
-        if(rs.next()) {
+        if(row == 1) {
             return true;
         } else {
             throw new SQLException("Enrollment creation failed.");
