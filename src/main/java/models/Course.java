@@ -105,4 +105,19 @@ public class Course {
                 return false;
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) {
+            return true;
+        }
+
+        if(!(obj instanceof Course)) {
+            return false;
+        }
+
+        Course o = (Course) obj;
+
+        return o.getCourseId() == this.courseId;
+    }
 }
