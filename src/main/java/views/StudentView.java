@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
 public class StudentView extends AbstractView {
 
@@ -54,7 +53,6 @@ public class StudentView extends AbstractView {
         System.out.println("====================================================================");
         System.out.println("===============================  " + index + "  ================================");
         System.out.println("Name: " + course.getName());
-        System.out.println("Description: " + course.getDescription());
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
         System.out.println("Credits: " + course.getCredits());
@@ -78,6 +76,9 @@ public class StudentView extends AbstractView {
                 }
 
                 input = scanner.nextLine();
+                if(input.equalsIgnoreCase("exit")) {
+                    return input;
+                }
                 try {
                     int index = Integer.parseInt(input);
 

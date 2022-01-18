@@ -12,7 +12,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
 public class CourseDetailView extends AbstractView {
 
@@ -30,14 +29,26 @@ public class CourseDetailView extends AbstractView {
 
     @Override
     public void render() {
-        System.out.println("Detailed Class Viewer");
         renderCourse(this.course);
+        System.out.println("You may enter 'home' to return to your home page.");
+        if(this.accountService.isUserFaculty()) {
+            System.out.println("If you would like to edit a field, enter the field's name (for example: 'name')." +
+                    "For enrollment start or end, please enter 'start' or 'end' respectively.");
+            System.out.println("If you would like to delete the class please enter 'delete'.");
+        } else {
+            if(this.course.isEnrolled((Student) this.accountService.getUser())) {
+                System.out.println("If you would like to unenroll from this class type 'unenroll'.");
+            } else {
+                System.out.println("If you would like to enroll in this class, type 'enroll'");
+            }
+        }
     }
 
     public void renderCourse(Course course) {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        System.out.println("==================================");
-        System.out.println("Name: " + course.getName());
+        System.out.println("====================================================================");
+        System.out.println("=============" + course.getName().toUpperCase() + "================");
+        System.out.println("====================================================================");
         System.out.println("Description: " + course.getDescription());
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
@@ -59,23 +70,11 @@ public class CourseDetailView extends AbstractView {
             // Then they're a faculty member, so we just need their name
             System.out.println("Instructor: " + course.getProfessor().getFirstName() + " " + course.getProfessor().getLastName());
         }
-        System.out.println("==================================");
+        System.out.println("====================================================================");
     }
 
     @Override
     public String listen() {
-
-        if(this.accountService.isUserFaculty()) {
-            System.out.println("If you would like to edit a field, enter the field's name (for example: 'name')." +
-                               "For enrollment start or end, please enter 'start' or 'end' respectively.");
-            System.out.println("If you would like to delete the class please enter 'delete'.");
-        } else {
-            if(this.course.isEnrolled((Student) this.accountService.getUser())) {
-                System.out.println("If you would like to unenroll from this class type 'unenroll'.");
-            } else {
-                System.out.println("If you would like to enroll in this class, type 'enroll'");
-            }
-        }
 
         while(true) {
             String input = scanner.nextLine();
@@ -116,6 +115,12 @@ public class CourseDetailView extends AbstractView {
                 System.out.println("Course: " + course.getName() + " was deleted!");
 
                 return "faculty";
+            } else if(input.equalsIgnoreCase("home")) {
+                if(this.accountService.isUserFaculty()) {
+                    return "faculty";
+                } else {
+                    return "student";
+                }
             } else if(this.course.isValidField(input)) {
                 System.out.println("What would you like to change it to?");
                 String newFieldData = scanner.nextLine();

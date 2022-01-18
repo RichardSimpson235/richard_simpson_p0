@@ -34,7 +34,8 @@ public class CourseRegistryView extends AbstractView {
             }
             System.out.println("====================================================================");
 
-            System.out.println("Please enter the integer of its spot in the list (ex '1')");
+            System.out.println("Please enter the integer of its spot in the list (ex '1') to view the course detail page.");
+            System.out.println("You may enter 'home' to return to your home page.");
         } catch (CourseRetrievalException | IndexOutOfBoundsException e) {
             System.out.println("The registry seems to be having some problems, try again later. To exit type, 'exit'.");
         }
@@ -45,11 +46,9 @@ public class CourseRegistryView extends AbstractView {
         System.out.println("====================================================================");
         System.out.println("===============================  " + index + "  ================================");
         System.out.println("Name: " + course.getName());
-        System.out.println("Description: " + course.getDescription());
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
         System.out.println("Credits: " + course.getCredits());
-        System.out.println("Instructor: " + course.getProfessor().getFirstName() + " " + course.getProfessor().getLastName());
     }
 
     @Override
@@ -59,6 +58,8 @@ public class CourseRegistryView extends AbstractView {
             String input = scanner.nextLine();
             if(input.equalsIgnoreCase("exit")) {
                 return input;
+            } else if(input.equalsIgnoreCase("home")) {
+                return "student";
             } else {
                 int index = Integer.parseInt(input);
                 try {
@@ -68,7 +69,7 @@ public class CourseRegistryView extends AbstractView {
                     if(input.equalsIgnoreCase("y")) {
                         service.selectCourse(course);
 
-                        return "student";
+                        return "detail";
                     } else if(!input.equalsIgnoreCase("n")) {
                         System.out.println("Please enter 'y' or 'n' for yes or no.");
                     }
