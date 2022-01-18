@@ -26,7 +26,7 @@ public class FacultyView extends AbstractView {
 
     @Override
     public void render() {
-        System.out.println("==========================================");
+        System.out.println("====================================================================");
          this.courses = accountService.getCourses();
 
         System.out.println("Welcome " + accountService.getUserName() + "!");
@@ -35,22 +35,24 @@ public class FacultyView extends AbstractView {
         } else {
             System.out.println("You have created the following courses:");
             for(int i = 1; i <=  this.courses.size(); i++) {
-                renderCourse(this.courses.get(i - 1));
+                renderCourse(this.courses.get(i - 1), i);
             }
+            System.out.println("====================================================================");
 
             if(this.courses.size() != 0) {
                 System.out.println("If you would like to edit one of your classes, please enter an integer in the list " +
                         "(for example press 1 for " +
-                        this.courses.get(0) + (this.courses.size() > 1 ? ", 2 for " + this.courses.get(1) + ", etc)." : ")"));
+                        this.courses.get(0).getName() + (this.courses.size() > 1 ? ", 2 for " + this.courses.get(1).getName() + ", etc)." : ")"));
             }
         }
 
         System.out.println("If you would like to add a new class, please enter 'new'.");
     }
 
-    private void renderCourse(Course course) {
+    private void renderCourse(Course course, int index) {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        System.out.println("==================================");
+        System.out.println("====================================================================");
+        System.out.println("===============================  " + index + "  ================================");
         System.out.println("Name: " + course.getName());
         System.out.println("Description: " + course.getDescription());
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
@@ -67,7 +69,6 @@ public class FacultyView extends AbstractView {
         }
 
         System.out.println(output);
-        System.out.println("==================================");
     }
 
     @Override
