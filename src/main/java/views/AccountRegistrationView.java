@@ -25,7 +25,6 @@ public class AccountRegistrationView extends AbstractView {
 
     @Override
     public String listen() {
-        Scanner scanner = new Scanner(this.inputStream);
 
         System.out.println("What is your first name?");
         String firstName = scanner.nextLine();
@@ -107,7 +106,6 @@ public class AccountRegistrationView extends AbstractView {
         } catch (RegistrationFailedException e) {
             System.out.println("We're sorry but it seems we had some trouble creating your account. Please try again.");
         }
-        scanner.close();
 
         return "landing";
     }

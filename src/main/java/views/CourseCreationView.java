@@ -28,12 +28,10 @@ public class CourseCreationView extends AbstractView {
 
     @Override
     public String listen() {
-        Scanner scanner = new Scanner(this.inputStream);
 
         System.out.println("What would you like to name this class?");
         String name = scanner.nextLine();
         if (name.equalsIgnoreCase("exit")) {
-            scanner.close();
 
             return name;
         }
@@ -41,7 +39,6 @@ public class CourseCreationView extends AbstractView {
         System.out.println("Please enter a description for this class:");
         String description = scanner.nextLine();
         if (description.equalsIgnoreCase("exit")) {
-            scanner.close();
 
             return description;
         }
@@ -52,7 +49,6 @@ public class CourseCreationView extends AbstractView {
         while(true) {
             String enrollmentStartDate = scanner.nextLine();
             if (enrollmentStartDate.equalsIgnoreCase("exit")) {
-                scanner.close();
 
                 return enrollmentStartDate;
             }
@@ -70,7 +66,6 @@ public class CourseCreationView extends AbstractView {
         while(true) {
             String enrollmentEndDate = scanner.nextLine();
             if (enrollmentEndDate.equalsIgnoreCase("exit")) {
-                scanner.close();
 
                 return enrollmentEndDate;
             }
@@ -88,7 +83,6 @@ public class CourseCreationView extends AbstractView {
         while(true) {
             String creditInput = scanner.nextLine();
             if (creditInput.equalsIgnoreCase("exit")) {
-                scanner.close();
 
                 return creditInput;
             }

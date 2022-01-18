@@ -81,6 +81,7 @@ public class Application {
                 default:
                     currentView = new ApplicationQuitView(System.in);
                     currentView.render();
+                    currentView.closeScanner();
                     System.exit(0);
             }
         }

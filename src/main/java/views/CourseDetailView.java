@@ -76,13 +76,11 @@ public class CourseDetailView extends AbstractView {
                 System.out.println("If you would like to enroll in this class, type 'enroll'");
             }
         }
-        Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {
             String input = scanner.nextLine();
 
             if(input.equalsIgnoreCase("exit")) {
-                scanner.close();
 
                 return input;
             } else if(input.equalsIgnoreCase("unenroll")) {
@@ -91,7 +89,6 @@ public class CourseDetailView extends AbstractView {
                 } catch (EnrollmentFailedException e) {
                     System.out.println("Sorry, we were not able to unenroll you from that class.");
                 }
-                scanner.close();
 
                 return "student";
             } else if(input.equalsIgnoreCase("enroll")) {
@@ -100,7 +97,6 @@ public class CourseDetailView extends AbstractView {
                 } catch (EnrollmentFailedException e) {
                     System.out.println("Sorry, we were not able to enroll you in that class.");
                 }
-                scanner.close();
 
                 return "student";
             } else if(input.equalsIgnoreCase("delete")) {
@@ -110,7 +106,6 @@ public class CourseDetailView extends AbstractView {
                     System.out.println("It seems we were unable to delete that course.");
                 }
                 System.out.println("Course: " + course.getName() + " was deleted!");
-                scanner.close();
 
                 return "faculty";
             } else if(this.course.isValidField(input)) {
@@ -119,7 +114,6 @@ public class CourseDetailView extends AbstractView {
 
                 try {
                     courseService.editCourse(input, newFieldData);
-                    scanner.close();
 
                     return "faculty";
                 } catch(NumberFormatException e) {

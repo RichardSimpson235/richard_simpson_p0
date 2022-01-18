@@ -59,13 +59,10 @@ public class StudentView extends AbstractView {
 
     @Override
     public String listen() {
-        Scanner scanner = new Scanner(this.inputStream);
-
         while (true) {
             String input = scanner.nextLine();
 
             if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("enroll")) {
-                scanner.close();
 
                 return input;
             } else if(input.equalsIgnoreCase("view")) {
@@ -87,7 +84,6 @@ public class StudentView extends AbstractView {
 
                         input = scanner.nextLine();
                         if(input.equalsIgnoreCase("y")) {
-                            scanner.close();
                             courseService.selectCourse(course);
 
                             return "detail";

@@ -52,12 +52,10 @@ public class CourseRegistryView extends AbstractView {
 
     @Override
     public String listen() {
-        Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {
             String input = scanner.nextLine();
             if(input.equalsIgnoreCase("exit")) {
-                scanner.close();
                 return input;
             } else {
                 int index = Integer.parseInt(input);
@@ -66,7 +64,6 @@ public class CourseRegistryView extends AbstractView {
                     System.out.println("You've selected: " +  input + " " + course.getName() + ", is this correct? (y/n)");
                     input = scanner.nextLine();
                     if(input.equalsIgnoreCase("y")) {
-                        scanner.close();
                         service.selectCourse(course);
 
                         return "detail";
