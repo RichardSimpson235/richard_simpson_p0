@@ -107,6 +107,7 @@ public class CourseDetailView extends AbstractView {
             } else if(input.equalsIgnoreCase("delete")) {
                 try {
                     courseService.deleteCourse();
+                    accountService.removeCourse(course);
                 } catch (DeletionFailedException e) {
                     System.out.println("It seems we were unable to delete that course.");
                 }
