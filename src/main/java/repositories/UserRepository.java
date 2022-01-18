@@ -80,6 +80,7 @@ public class UserRepository extends AbstractRepository {
             faculty.setDateOfBirth(rs.getLong("date_of_birth"));
             faculty.setUsername(rs.getString("username"));
             faculty.setPassword(rs.getString("password"));
+            faculty.setEmployeeId(rs.getInt("employee_id"));
             faculty.setSalary(rs.getInt("salary"));
             faculty.setDepartment(rs.getString("department"));
 
@@ -93,6 +94,7 @@ public class UserRepository extends AbstractRepository {
             student.setDateOfBirth(rs.getLong("date_of_birth"));
             student.setUsername(rs.getString("username"));
             student.setPassword(rs.getString("password"));
+            student.setStudentId(rs.getInt("student_id"));
             student.setMealPlanTier(rs.getInt("meal_plan_tier"));
             student.setMajor(rs.getString("major"));
 
