@@ -21,9 +21,9 @@ public class EnrollmentRepository extends AbstractRepository {
         query.setInt(1, faculty.getEmployeeId());
         query.setInt(2, course.getCourseId());
 
-        ResultSet rs = query.executeQuery();
+        int row = query.executeUpdate();
 
-        if(rs.next()) {
+        if(row == 1) {
             return true;
         } else {
             throw new SQLException("Assignment creation failed.");
@@ -48,14 +48,14 @@ public class EnrollmentRepository extends AbstractRepository {
     public boolean delete(Student student, Course course) throws SQLException {
         String sql = "DELETE FROM enrollments USING students " +
                      "WHERE students.student_id = enrollments.student_id " +
-                     "AND student_id = ? AND course_id = ?;";
+                     "AND enrollments.student_id = ? AND enrollments.course_id = ?;";
         PreparedStatement query = this.connection.prepareStatement(sql);
         query.setInt(1, student.getStudentId());
         query.setInt(2, course.getCourseId());
 
-        ResultSet rs = query.executeQuery();
+        int rows = query.executeUpdate();
 
-        if(!rs.next()) {
+        if(rows == 1) {
             return true;
         } else {
             throw new SQLException("Enrollment creation failed.");
