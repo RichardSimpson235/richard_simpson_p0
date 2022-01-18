@@ -91,6 +91,7 @@ public class AccountService {
             Date today = new Date();
             if(today.getTime() > course.getEnrollmentStartDate() && today.getTime() < course.getEnrollmentEndDate()) {
                 this.enrollmentRepository.create((Student) this.user, course);
+                this.user.addCourse(course);
             } else {
                 throw new EnrollmentRangeException();
             }
@@ -102,6 +103,7 @@ public class AccountService {
     public void unenroll(Course course) throws EnrollmentFailedException {
         try {
             this.enrollmentRepository.delete((Student) this.user, course);
+            this.user.removeCourse(course);
         } catch (SQLException e) {
             throw new EnrollmentFailedException();
         }
@@ -121,5 +123,9 @@ public class AccountService {
 
     public User getUser() {
         return this.user;
+    }
+
+    public void removeCourse(Course course) {
+        this.user.removeCourse(course);
     }
 }
