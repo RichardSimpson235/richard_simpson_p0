@@ -65,7 +65,7 @@ public class CourseRegistryView extends AbstractView {
                     if(input.equalsIgnoreCase("y")) {
                         service.selectCourse(course);
 
-                        return "detail";
+                        return "student";
                     } else if(!input.equalsIgnoreCase("n")) {
                         System.out.println("Please enter 'y' or 'n' for yes or no.");
                     }
