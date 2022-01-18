@@ -43,8 +43,7 @@ public class LoginView extends AbstractView {
                 return username;
             }
 
-            System.out.println();
-            System.out.println("Password: ");
+            System.out.print("Password: ");
             String password = scanner.nextLine();
             if (password.equalsIgnoreCase("exit")) {
                 return password;
