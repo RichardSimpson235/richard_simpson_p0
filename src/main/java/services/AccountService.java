@@ -100,10 +100,15 @@ public class AccountService {
         }
     }
 
-    public void unenroll(Course course) throws EnrollmentFailedException {
+    public void unenroll(Course course) throws EnrollmentFailedException, EnrollmentRangeException {
         try {
-            this.enrollmentRepository.delete((Student) this.user, course);
-            this.user.removeCourse(course);
+            Date today = new Date();
+            if(today.getTime() > course.getEnrollmentStartDate() && today.getTime() < course.getEnrollmentEndDate()) {
+                this.enrollmentRepository.delete((Student) this.user, course);
+                this.user.removeCourse(course);
+            } else {
+                throw new EnrollmentRangeException();
+            }
         } catch (SQLException e) {
             throw new EnrollmentFailedException();
         }
