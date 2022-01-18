@@ -14,6 +14,13 @@ public class List<E> {
         this.array = new Object[size];
     }
 
+    /**
+     * This method is used to retrieve data from the list.
+     *
+     * @param index                      The index to get the item from
+     * @return                           The object stored at index
+     * @throws IndexOutOfBoundsException Thrown when the index is too small or too large
+     */
     @SuppressWarnings("unchecked")
     public E get(int index) throws IndexOutOfBoundsException {
         if (index >= size) {
@@ -24,7 +31,12 @@ public class List<E> {
         return (E) this.array[index];
     }
 
-    // resize list if we hit the maximum size
+    /**
+     * This method adds elements to the list. If the array is full, we
+     * resize the array and then add the element.
+     *
+     * @param item The item to add to the list
+     */
     public void add(E item) {
         if(this.size >= this.array.length) {
             resize(this.array.length * 2);
@@ -34,6 +46,11 @@ public class List<E> {
         this.size++;
     }
 
+    /**
+     * This method removes items from the list.
+     *
+     * @param item The item to be removed
+     */
     public void remove(E item) {
         for (int i = this.size - 1; i >= 0; i--) {
             if (item.equals(this.array[i])) {
@@ -49,6 +66,12 @@ public class List<E> {
         }
     }
 
+    /**
+     * Iterates through the array and checks equality with the item.
+     *
+     * @param item The item to check
+     * @return     Whether the item is in the list or not
+     */
     public boolean contains(E item) {
         for (Object containedItem: this.array) {
             if (item.equals(containedItem)) {
@@ -59,6 +82,11 @@ public class List<E> {
         return false;
     }
 
+    /**
+     * Used to resize the underlying array.
+     *
+     * @param newSize new size of the underlying array
+     */
     public void resize(int newSize) {
         Object[] temp = new Object[newSize];
         System.arraycopy(this.array, 0, temp, 0, this.size);
@@ -66,6 +94,11 @@ public class List<E> {
         this.array = temp;
     }
 
+    /**
+     * Returns the number of elements in then list
+     *
+     * @return the size of the list
+     */
     public int size() {
         return this.size;
     }
@@ -74,6 +107,11 @@ public class List<E> {
         return this.size == 0;
     }
 
+    /**
+     * Simply iterates through the list and appends the item's toString value.
+     *
+     * @return a string representation of the list
+     */
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
