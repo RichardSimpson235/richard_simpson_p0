@@ -1,9 +1,6 @@
 package main.java.services;
 
-import main.java.exceptions.CreationFailedException;
-import main.java.exceptions.EnrollmentFailedException;
-import main.java.exceptions.MissingAccountException;
-import main.java.exceptions.RegistrationFailedException;
+import main.java.exceptions.*;
 import main.java.models.Course;
 import main.java.models.Faculty;
 import main.java.models.Student;
@@ -32,6 +29,7 @@ public class AccountService {
     public void assign(Course course) throws CreationFailedException {
         try {
             this.enrollmentRepository.assign((Faculty) this.user, course);
+            this.user.addCourse(course);
         } catch (SQLException e) {
             throw new CreationFailedException();
         }
@@ -88,13 +86,13 @@ public class AccountService {
         }
     }
 
-    public void enroll(Course course) throws EnrollmentFailedException {
+    public void enroll(Course course) throws EnrollmentFailedException, EnrollmentRangeException {
         try {
             Date today = new Date();
             if(today.getTime() > course.getEnrollmentStartDate() && today.getTime() < course.getEnrollmentEndDate()) {
                 this.enrollmentRepository.create((Student) this.user, course);
             } else {
-                throw new EnrollmentFailedException();
+                throw new EnrollmentRangeException();
             }
         } catch (SQLException e) {
             throw new EnrollmentFailedException();
