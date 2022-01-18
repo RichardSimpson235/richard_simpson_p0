@@ -16,6 +16,14 @@ public class CourseRepository extends AbstractRepository {
         super(connection);
     }
 
+    /**
+     * This method is used to create a Course in the database. It gets back the id the
+     * database created for the course and updates the input course's courseId.
+     *
+     * @param course The course to be created
+     * @return whether the creation succeeded or failed
+     * @throws SQLException thrown by JDBC when an error occurs with the database
+     */
     public boolean create(Course course) throws SQLException {
         String sql = "INSERT INTO courses VALUES (default, ?, ?, ?, ?, ?) RETURNING course_id;";
         PreparedStatement query = this.connection.prepareStatement(sql);
@@ -38,12 +46,13 @@ public class CourseRepository extends AbstractRepository {
     }
 
     /**
-     * Because the database makes use of ON DELETE CASCADE constraint, any enrollments
-     * in the enrollment table should be deleted as a consequence of this action
+     * Deletes the provided course from the database. Because the database makes use of
+     * the ON DELETE CASCADE constraint, any enrollments in the enrollment table
+     * are deleted as a consequence of this action
      *
-     * @param course
-     * @return
-     * @throws SQLException
+     * @param course the course to be deleted
+     * @return whether the deletion succeeded or failed
+     * @throws SQLException thrown by JDBC when an error occurs with the database
      */
     public boolean delete(Course course) throws SQLException {
         String sql = "DELETE FROM courses WHERE course_id = ?;";
@@ -59,6 +68,13 @@ public class CourseRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Used to modify a course in the database. Obtains the course by id.
+     *
+     * @param course the new course data
+     * @return whether the update succeeded or failed
+     * @throws SQLException thrown by JDBC when an error occurs with the database
+     */
     public boolean edit(Course course) throws SQLException {
         String sql = "UPDATE courses SET name = ?, description = ?, enrollment_start = ?, enrollment_end = ?, credits = ? WHERE course_id = ?;";
         PreparedStatement query = this.connection.prepareStatement(sql);
@@ -77,6 +93,16 @@ public class CourseRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Returns all of the courses in the database. The first table combines
+     * the information from the student and course tables to get all the
+     * students enrolled in a course. The second table combines the courses
+     * and which faculty members are teaching them. This information is
+     * extracted to create the course objects for the list.
+     *
+     * @return a list of course objects with the data from the database
+     * @throws SQLException thrown by JDBC when an error occurs with the database
+     */
     public List<Course> getAllCourses() throws SQLException {
         String coursesSql = "WITH full_students AS (" +
                 "SELECT * FROM students INNER JOIN users USING (user_id)" +
