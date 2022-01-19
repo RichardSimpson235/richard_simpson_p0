@@ -57,7 +57,7 @@ public class CourseDetailView extends AbstractView {
         System.out.println("====================================================================");
         renderNameHeader();
         System.out.println("====================================================================");
-        System.out.println("Description: " + course.getDescription());
+        renderWrappedDescription();
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
         System.out.println("Credits: " + course.getCredits());
@@ -108,6 +108,21 @@ public class CourseDetailView extends AbstractView {
         }
 
         System.out.println(title);
+    }
+
+    /**
+     * This method wraps the description string of the course to fit the screen better.
+     */
+    private void renderWrappedDescription() {
+        String s = "Description: " + course.getDescription();
+
+
+        int numberOfLines = (int) Math.ceil((double) s.length() / 68);
+        for (int i = 0; i < numberOfLines; i++) {
+            int start = Math.min(i * 68, s.length() - 1);
+            int end = Math.min((i + 1) * 68, s.length());;
+            System.out.println(s.substring(start, end));
+        }
     }
 
     /**
