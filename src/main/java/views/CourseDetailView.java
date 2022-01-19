@@ -81,6 +81,12 @@ public class CourseDetailView extends AbstractView {
         System.out.println("====================================================================");
     }
 
+    /**
+     * This method renders the name of the course at the top of the section. For example:
+     * ====================================================================
+     * =========================== Course Name ============================
+     * ====================================================================
+     */
     private void renderNameHeader() {
         StringBuilder title = new StringBuilder();
         int spacerLength = (68 - course.getName().length() - 2) / 2;
