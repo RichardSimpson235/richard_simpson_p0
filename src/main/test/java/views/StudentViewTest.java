@@ -40,11 +40,11 @@ public class StudentViewTest {
     }
 
     @Test
-    public void testListenWithEnroll() {
-        ByteArrayInputStream input = new ByteArrayInputStream("enroll".getBytes());
+    public void testListenWithRegistry() {
+        ByteArrayInputStream input = new ByteArrayInputStream("registry".getBytes());
         StudentView view = new StudentView(input, accountServiceMock, this.courseServiceMock);
 
-        assertEquals(view.listen(), "enroll");
+        assertEquals(view.listen(), "registry");
     }
 
     @Test
