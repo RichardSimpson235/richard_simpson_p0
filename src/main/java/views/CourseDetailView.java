@@ -52,12 +52,12 @@ public class CourseDetailView extends AbstractView {
      *
      * @param course the course to render
      */
-    public void renderCourse(Course course) {
+    private void renderCourse(Course course) {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         System.out.println("====================================================================");
-        System.out.println("=============" + course.getName().toUpperCase() + "================");
+        renderNameHeader();
         System.out.println("====================================================================");
-        System.out.println("Description: " + course.getDescription());
+        renderWrappedDescription();
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
         System.out.println("Credits: " + course.getCredits());
@@ -79,6 +79,50 @@ public class CourseDetailView extends AbstractView {
             System.out.println("Instructor: " + course.getProfessor().getFirstName() + " " + course.getProfessor().getLastName());
         }
         System.out.println("====================================================================");
+    }
+
+    /**
+     * This method renders the name of the course at the top of the section. For example:
+     * ====================================================================
+     * =========================== Course Name ============================
+     * ====================================================================
+     */
+    private void renderNameHeader() {
+        StringBuilder title = new StringBuilder();
+        int spacerLength = (68 - course.getName().length() - 2) / 2;
+
+        // Header is split into 3 parts, the first spacer, the title, and the second spacer:
+        for(int i = 0; i < spacerLength; i++) {
+            title.append("=");
+        }
+
+        title.append(" ");
+        title.append(course.getName());
+        title.append(" ");
+        if(course.getName().length() % 2 == 1) {
+            title.append(" ");
+        }
+
+        for(int i = 0; i < spacerLength; i++) {
+            title.append("=");
+        }
+
+        System.out.println(title);
+    }
+
+    /**
+     * This method wraps the description string of the course to fit the screen better.
+     */
+    private void renderWrappedDescription() {
+        String s = "Description: " + course.getDescription();
+
+
+        int numberOfLines = (int) Math.ceil((double) s.length() / 68);
+        for (int i = 0; i < numberOfLines; i++) {
+            int start = Math.min(i * 68, s.length() - 1);
+            int end = Math.min((i + 1) * 68, s.length());;
+            System.out.println(s.substring(start, end));
+        }
     }
 
     /**

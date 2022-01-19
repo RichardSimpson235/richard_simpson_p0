@@ -37,6 +37,10 @@ public class AccountServiceMock extends AccountService {
     }
 
     @Override
+    public void removeCourse(Course course) {
+    }
+
+    @Override
     public void register(String firstName, String lastName, String email, long dateOfBirth, String username, String password, int mealPlanTier, String major) throws RegistrationFailedException {
     }
 
