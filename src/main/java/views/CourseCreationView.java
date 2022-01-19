@@ -20,11 +20,33 @@ public class CourseCreationView extends AbstractView {
         this.courseService = courseService;
     }
 
+    /**
+     * This method prints out the screen for the user to read.
+     */
     @Override
     public void render() {
         System.out.println("You are now creating a course...");
     }
 
+    /**
+     * This method listens for user input. The user can enter 'exit' at any time to quit the application.
+     * An example of how this page is used is as follows (A stands for the application, U for the user):
+     * =========================================================================================================
+     * (A)-> What would you like to name this class?
+     * (U)-> Linear Algebra
+     * (A)-> Please enter a description for this class:
+     * (U)-> description
+     * (A)-> When does enrollment for this class start? Enter date: MM/dd/yyyy
+     * (U)-> 01/01/1993
+     * (A)-> When does enrollment for this class end? Enter date: MM/dd/yyyy
+     * (U)-> 01/01/1994
+     * (A)-> How many credits is this course worth?
+     * (U)-> 3
+     * =========================================================================================================
+     * Where the user could make a mistake the system prompts them again.
+     *
+     * @return the next view to navigate to
+     */
     @Override
     public String listen() {
 

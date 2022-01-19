@@ -18,11 +18,38 @@ public class AccountRegistrationView extends AbstractView {
         this.service = service;
     }
 
+    /**
+     * This method prints out the screen for the user to read.
+     */
     @Override
     public void render() {
         System.out.println("Welcome to account registration! Please answer the following questions:");
     }
 
+    /**
+     * This method listens for user input. The user can enter 'exit' at any time to quit the application.
+     * An example of how this page is used is as follows (A stands for the application, U for the user):
+     * =========================================================================================================
+     * (A)-> What is your first name?
+     * (U)-> Richard
+     * (A)-> What is your last name?
+     * (U)-> Simpson
+     * (A)-> What is your date of birth? Please enter the date in the following format: MM/dd/yyyy
+     * (U)-> 01/01/1993
+     * (A)-> What should your username be?
+     * (U)-> rsimpson
+     * (A)-> What should your password be?
+     * (U)-> password
+     * (A)-> What would you like your meal plan tier to be? Please enter an integer between 0 and 3, inclusive.
+     * (U)-> 0
+     * (A)-> What is your major? Please limit your response to less than 20 characters.
+     * (U)-> Computer Science
+     * =========================================================================================================
+     * Where the user could make a mistake the system prompts them again.
+     *
+     *
+     * @return the next view to navigate to
+     */
     @Override
     public String listen() {
 

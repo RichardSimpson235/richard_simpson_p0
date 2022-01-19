@@ -20,6 +20,9 @@ public class CourseRegistryView extends AbstractView {
         this.service = service;
     }
 
+    /**
+     * This method prints out the screen for the user to read.
+     */
     @Override
     public void render() {
         System.out.println("====================================================================");
@@ -41,6 +44,11 @@ public class CourseRegistryView extends AbstractView {
         }
     }
 
+    /**
+     * This method renders a course object to the screen
+     *
+     * @param course the course to render
+     */
     private void renderCourse(Course course, int index) {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         System.out.println("====================================================================");
@@ -51,6 +59,22 @@ public class CourseRegistryView extends AbstractView {
         System.out.println("Credits: " + course.getCredits());
     }
 
+    /**
+     * This method listens for user input. The user can enter 'exit' at any time to quit the application.
+     * An example of how this page is used is as follows (A stands for the application, U for the user):
+     * =========================================================================================================
+     * (list of classes)
+     * (A)-> Please enter the integer of its spot in the list (ex '1') to view the course detail page.
+     * (A)-> You may enter 'home' to return to your home page.
+     * (U)-> 1
+     * (A)-> You've selected 1. Linear Algebra, is this correct? (y/n)
+     * (U)-> y
+     * (navigates to detail page for course 1)
+     * =========================================================================================================
+     * Where the user could make a mistake the system prompts them again.
+     *
+     * @return the next view to navigate to
+     */
     @Override
     public String listen() {
 

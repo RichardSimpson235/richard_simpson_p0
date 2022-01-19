@@ -22,6 +22,9 @@ public class StudentView extends AbstractView {
         this.courseService = courseService;
     }
 
+    /**
+     * This method prints out the screen for the user to read.
+     */
     @Override
     public void render() {
         System.out.println("====================================================================");
@@ -48,6 +51,11 @@ public class StudentView extends AbstractView {
 
     }
 
+    /**
+     * This method renders a course object to the screen
+     *
+     * @param course the course to render
+     */
     private void renderCourse(Course course, int index) {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         System.out.println("====================================================================");
@@ -59,6 +67,22 @@ public class StudentView extends AbstractView {
         System.out.println("Instructor: " + course.getProfessor().getFirstName() + " " + course.getProfessor().getLastName());
     }
 
+    /**
+     * This method listens for user input. The user can enter 'exit' at any time to quit the application.
+     * An example of how this page is used is as follows (A stands for the application, U for the user):
+     * =========================================================================================================
+     * (A)-> You are enrolled in the following courses:
+     * (course list)
+     * (A)-> If you would like to see the details of a class please enter 'view'.
+     * (A)-> If you would like to view the registry of all classes please type 'registry'.
+     * (U)-> view
+     * (A)-> Please enter an integer of the class list (for example press 1 for Linear Algebra)
+     * (U)-> 1
+     * (navigates to course detail view)
+     * =========================================================================================================
+     *
+     * @return the next view to navigate to
+     */
     @Override
     public String listen() {
         while (true) {

@@ -23,6 +23,9 @@ public class FacultyView extends AbstractView {
         this.courseService = courseService;
     }
 
+    /**
+     * This method prints out the screen for the user to read.
+     */
     @Override
     public void render() {
         System.out.println("====================================================================");
@@ -48,6 +51,11 @@ public class FacultyView extends AbstractView {
         System.out.println("If you would like to add a new class, please enter 'new'.");
     }
 
+    /**
+     * This method renders a course object to the screen
+     *
+     * @param course the course to render
+     */
     private void renderCourse(Course course, int index) {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         System.out.println("====================================================================");
@@ -69,6 +77,21 @@ public class FacultyView extends AbstractView {
         System.out.println(output);
     }
 
+    /**
+     * This method listens for user input. The user can enter 'exit' at any time to quit the application.
+     * An example of how this page is used is as follows (A stands for the application, U for the user):
+     * =========================================================================================================
+     * (A)-> You have created the following courses:
+     * (course list)
+     * (A)-> If you would like to edit one of your classes, please enter an integer in the list (for example
+     * press 1 for Linear Algebra).
+     * (A)-> If you would like to add a new class, please enter 'new'.
+     * (U)-> new
+     * (navigates to course creation)
+     * =========================================================================================================
+     *
+     * @return the next view to navigate to
+     */
     @Override
     public String listen() {
 
@@ -95,10 +118,10 @@ public class FacultyView extends AbstractView {
                         System.out.println("Please enter 'y' or 'n' for yes or no.");
                     }
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("You entered an invalid number! Please check the integers in front of the classes.");
+                    System.out.println("You entered an invalid number! Please check the integers ot top of the classes.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("It seems you didn't enter an integer. Please enter an integer.");
+                System.out.println("That isn't a recognized command. Please enter an integer, 'new', or 'exit'.");
             }
         }
     }

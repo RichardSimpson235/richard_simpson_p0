@@ -17,6 +17,9 @@ public class Application {
 
     private static Connection connection = null;
 
+    /**
+     * This method sets up the connection object.
+     */
     private void init() {
         Properties properties = new Properties();
 
@@ -36,6 +39,10 @@ public class Application {
         }
     }
 
+    /**
+     * Called by main to run the application. It sets up dependencies, injects them, and maintains the
+     * main loop, using a switch statement to navigate to the different pages.
+     */
     public void run() {
         // First we initialize our connection to the database
         init();

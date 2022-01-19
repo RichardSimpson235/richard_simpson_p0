@@ -11,12 +11,24 @@ public abstract class AbstractView {
         scanner = new Scanner(inputStream);
     }
 
+    /**
+     * This method is used by the Application class
+     * to close the input scanner.
+     */
     public void closeScanner() {
         scanner.close();
         scanner = null;
     }
 
+    /**
+     * This method is used to print out information to the user.
+     */
     public abstract void render();
-    public abstract String listen();
 
+    /**
+     * This method is used to listen to user input and process it.
+     *
+     * @return the key of the next view to navigate to
+     */
+    public abstract String listen();
 }
