@@ -113,7 +113,7 @@ public class AccountRegistrationView extends AbstractView {
                 mealPlanTier = Integer.parseInt(tier);
 
                 if(mealPlanTier < 0 || mealPlanTier > 3) {
-                    System.out.println("The number you entered is too big! It must either be 1, 2, or 3.");
+                    System.out.println("The number you entered is too big! It must either be 0, 1, 2, or 3.");
                 } else {
                     break;
                 }
@@ -123,9 +123,17 @@ public class AccountRegistrationView extends AbstractView {
         }
 
         System.out.println("What is your major? Please limit your response to less than 20 characters.");
-        String major = scanner.nextLine();
-        if(major.equalsIgnoreCase("exit")) {
-            return "exit";
+        String major;
+        while (true) {
+            major = scanner.nextLine();
+            if(major.equalsIgnoreCase("exit")) {
+                return "exit";
+            }
+            if(major.length() > 20) {
+                System.out.println("Please make sure your major is no longer than 20 character.");
+            } else {
+                break;
+            }
         }
 
         try {
