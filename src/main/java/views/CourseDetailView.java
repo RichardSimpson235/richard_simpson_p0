@@ -52,10 +52,10 @@ public class CourseDetailView extends AbstractView {
      *
      * @param course the course to render
      */
-    public void renderCourse(Course course) {
+    private void renderCourse(Course course) {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         System.out.println("====================================================================");
-        System.out.println("=============" + course.getName().toUpperCase() + "================");
+        renderNameHeader();
         System.out.println("====================================================================");
         System.out.println("Description: " + course.getDescription());
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
@@ -79,6 +79,29 @@ public class CourseDetailView extends AbstractView {
             System.out.println("Instructor: " + course.getProfessor().getFirstName() + " " + course.getProfessor().getLastName());
         }
         System.out.println("====================================================================");
+    }
+
+    private void renderNameHeader() {
+        StringBuilder title = new StringBuilder();
+        int spacerLength = (68 - course.getName().length() - 2) / 2;
+
+        // Header is split into 3 parts, the first spacer, the title, and the second spacer:
+        for(int i = 0; i < spacerLength; i++) {
+            title.append("=");
+        }
+
+        title.append(" ");
+        title.append(course.getName());
+        title.append(" ");
+        if(course.getName().length() % 2 == 1) {
+            title.append(" ");
+        }
+
+        for(int i = 0; i < spacerLength; i++) {
+            title.append("=");
+        }
+
+        System.out.println(title);
     }
 
     /**
