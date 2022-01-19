@@ -1,5 +1,7 @@
 package main.java.views;
 
+import main.java.models.Faculty;
+import main.java.models.Student;
 import main.java.services.CourseService;
 import main.java.structures.List;
 import main.java.models.Course;
@@ -30,7 +32,7 @@ public class StudentView extends AbstractView {
         System.out.println("====================================================================");
         this.courses = accountService.getCourses();
 
-        System.out.println("Welcome " + accountService.getUserName() + "!");
+        renderUser();
 
         if(this.courses.isEmpty()) {
             System.out.println("You have not enrolled in any courses yet.");
@@ -49,6 +51,23 @@ public class StudentView extends AbstractView {
         }
         System.out.println("If you would like to view the registry of all classes please type 'registry'.");
 
+    }
+
+    /**
+     * This method renders the user object to the screen
+     */
+    private void renderUser() {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Student student = (Student) accountService.getUser();
+        System.out.println("Welcome " + student.getFirstName() + " " + student.getLastName() + "!");
+        System.out.println("====================================================================");
+        System.out.println("First Name: " + student.getFirstName());
+        System.out.println("Last Name: " + student.getLastName());
+        System.out.println("Email: " + student.getEmail());
+        System.out.println("Date of Birth: " + dateFormat.format(student.getDateOfBirth()));
+        System.out.println("Salary: " + student.getMealPlanTier());
+        System.out.println("Department: " + student.getMajor());
+        System.out.println("====================================================================");
     }
 
     /**

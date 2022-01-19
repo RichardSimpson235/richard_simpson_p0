@@ -1,5 +1,6 @@
 package main.java.views;
 
+import main.java.models.Faculty;
 import main.java.models.Student;
 import main.java.services.CourseService;
 import main.java.structures.List;
@@ -32,6 +33,7 @@ public class FacultyView extends AbstractView {
          this.courses = accountService.getCourses();
 
         System.out.println("Welcome " + accountService.getUserName() + "!");
+        renderUser();
         if(this.courses.isEmpty()) {
             System.out.println("You have not created any courses yet.");
         } else {
@@ -49,6 +51,22 @@ public class FacultyView extends AbstractView {
         }
 
         System.out.println("If you would like to add a new class, please enter 'new'.");
+    }
+
+    /**
+     * This method renders the user object to the screen
+     */
+    private void renderUser() {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        System.out.println("====================================================================");
+        Faculty faculty = (Faculty) accountService.getUser();
+        System.out.println("First Name: " + faculty.getFirstName());
+        System.out.println("Last Name: " + faculty.getLastName());
+        System.out.println("Email: " + faculty.getEmail());
+        System.out.println("Date of Birth: " + dateFormat.format(faculty.getDateOfBirth()));
+        System.out.println("Salary: " + faculty.getSalary());
+        System.out.println("Department: " + faculty.getDepartment());
+        System.out.println("====================================================================");
     }
 
     /**
