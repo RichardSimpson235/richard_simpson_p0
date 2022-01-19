@@ -33,7 +33,6 @@ public class LoginView extends AbstractView {
      */
     @Override
     public String listen() {
-        Scanner scanner = new Scanner(this.inputStream);
 
         while(true) {
             System.out.print("Username: ");
@@ -44,8 +43,7 @@ public class LoginView extends AbstractView {
                 return username;
             }
 
-            System.out.println();
-            System.out.println("Password: ");
+            System.out.print("Password: ");
             String password = scanner.nextLine();
             if (password.equalsIgnoreCase("exit")) {
                 return password;
@@ -54,7 +52,6 @@ public class LoginView extends AbstractView {
             try {
 
                 String type = this.service.authenticate(username, password);
-                scanner.close();
 
                 return type;
 

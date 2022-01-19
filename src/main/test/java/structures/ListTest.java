@@ -61,7 +61,7 @@ public class ListTest {
     }
 
     @Test
-    public void removeTest() {
+    public void removeMiddleTest() {
         List<Integer> list = new List<>();
         for(int i = 0; i < 5; i++) {
             list.add(i);
@@ -72,14 +72,23 @@ public class ListTest {
         assertEquals(list.size(), 4);
 
         for (int i = 0; i < list.size(); i++) {
+            assertNotEquals(list.get(i), 3);
+        }
+    }
 
-            if(i <= 2) {
-                assertEquals(list.get(i), i);
-            } else if (i == 3) {
-                assertNotEquals(list.get(i), i);
-            } else {
-                assertEquals(list.get(i), i + 1);
-            }
+    @Test
+    public void removeEndTest() {
+        List<Integer> list = new List<>();
+        for(int i = 0; i < 5; i++) {
+            list.add(i);
+        }
+
+        list.remove(4);
+
+        assertEquals(list.size(), 4);
+
+        for (int i = 0; i < list.size(); i++) {
+            assertNotEquals(list.get(i), 4);
         }
     }
 

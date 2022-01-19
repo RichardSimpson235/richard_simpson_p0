@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Scanner;
 
 public class CourseCreationView extends AbstractView {
 
@@ -21,19 +20,39 @@ public class CourseCreationView extends AbstractView {
         this.courseService = courseService;
     }
 
+    /**
+     * This method prints out the screen for the user to read.
+     */
     @Override
     public void render() {
         System.out.println("You are now creating a course...");
     }
 
+    /**
+     * This method listens for user input. The user can enter 'exit' at any time to quit the application.
+     * An example of how this page is used is as follows (A stands for the application, U for the user):
+     * =========================================================================================================
+     * (A)-> What would you like to name this class?
+     * (U)-> Linear Algebra
+     * (A)-> Please enter a description for this class:
+     * (U)-> description
+     * (A)-> When does enrollment for this class start? Enter date: MM/dd/yyyy
+     * (U)-> 01/01/1993
+     * (A)-> When does enrollment for this class end? Enter date: MM/dd/yyyy
+     * (U)-> 01/01/1994
+     * (A)-> How many credits is this course worth?
+     * (U)-> 3
+     * =========================================================================================================
+     * Where the user could make a mistake the system prompts them again.
+     *
+     * @return the next view to navigate to
+     */
     @Override
     public String listen() {
-        Scanner scanner = new Scanner(this.inputStream);
 
         System.out.println("What would you like to name this class?");
         String name = scanner.nextLine();
         if (name.equalsIgnoreCase("exit")) {
-            scanner.close();
 
             return name;
         }
@@ -41,7 +60,6 @@ public class CourseCreationView extends AbstractView {
         System.out.println("Please enter a description for this class:");
         String description = scanner.nextLine();
         if (description.equalsIgnoreCase("exit")) {
-            scanner.close();
 
             return description;
         }
@@ -52,7 +70,6 @@ public class CourseCreationView extends AbstractView {
         while(true) {
             String enrollmentStartDate = scanner.nextLine();
             if (enrollmentStartDate.equalsIgnoreCase("exit")) {
-                scanner.close();
 
                 return enrollmentStartDate;
             }
@@ -70,7 +87,6 @@ public class CourseCreationView extends AbstractView {
         while(true) {
             String enrollmentEndDate = scanner.nextLine();
             if (enrollmentEndDate.equalsIgnoreCase("exit")) {
-                scanner.close();
 
                 return enrollmentEndDate;
             }
@@ -88,7 +104,6 @@ public class CourseCreationView extends AbstractView {
         while(true) {
             String creditInput = scanner.nextLine();
             if (creditInput.equalsIgnoreCase("exit")) {
-                scanner.close();
 
                 return creditInput;
             }
@@ -103,8 +118,10 @@ public class CourseCreationView extends AbstractView {
 
         try {
             courseService.createCourse(name, description, enrollmentStartDateL, enrollmentEndDateL, credits);
+            accountService.assign(courseService.getCourse());
         } catch (CreationFailedException e) {
             System.out.println("We failed to create the course, you may need to try again later.");
+            System.out.println();
         }
 
         return "faculty";

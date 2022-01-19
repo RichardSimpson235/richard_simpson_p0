@@ -16,6 +16,14 @@ public class CourseRepository extends AbstractRepository {
         super(connection);
     }
 
+    /**
+     * This method is used to create a Course in the database. It gets back the id the
+     * database created for the course and updates the input course's courseId.
+     *
+     * @param course The course to be created
+     * @return whether the creation succeeded or failed
+     * @throws SQLException thrown by JDBC when an error occurs with the database
+     */
     public boolean create(Course course) throws SQLException {
         String sql = "INSERT INTO courses VALUES (default, ?, ?, ?, ?, ?) RETURNING course_id;";
         PreparedStatement query = this.connection.prepareStatement(sql);
@@ -38,12 +46,13 @@ public class CourseRepository extends AbstractRepository {
     }
 
     /**
-     * Because the database makes use of ON DELETE CASCADE constraint, any enrollments
-     * in the enrollment table should be deleted as a consequence of this action
+     * Deletes the provided course from the database. Because the database makes use of
+     * the ON DELETE CASCADE constraint, any enrollments in the enrollment table
+     * are deleted as a consequence of this action
      *
-     * @param course
-     * @return
-     * @throws SQLException
+     * @param course the course to be deleted
+     * @return whether the deletion succeeded or failed
+     * @throws SQLException thrown by JDBC when an error occurs with the database
      */
     public boolean delete(Course course) throws SQLException {
         String sql = "DELETE FROM courses WHERE course_id = ?;";
@@ -52,13 +61,20 @@ public class CourseRepository extends AbstractRepository {
 
         int rows = query.executeUpdate();
 
-        if(rows == 1) {
+        if(rows > 0) {
             return true;
         } else {
             throw new SQLException("Course deletion failed.");
         }
     }
 
+    /**
+     * Used to modify a course in the database. Obtains the course by id.
+     *
+     * @param course the new course data
+     * @return whether the update succeeded or failed
+     * @throws SQLException thrown by JDBC when an error occurs with the database
+     */
     public boolean edit(Course course) throws SQLException {
         String sql = "UPDATE courses SET name = ?, description = ?, enrollment_start = ?, enrollment_end = ?, credits = ? WHERE course_id = ?;";
         PreparedStatement query = this.connection.prepareStatement(sql);
@@ -77,14 +93,24 @@ public class CourseRepository extends AbstractRepository {
         }
     }
 
+    /**
+     * Returns all of the courses in the database. The first table combines
+     * the information from the student and course tables to get all the
+     * students enrolled in a course. The second table combines the courses
+     * and which faculty members are teaching them. This information is
+     * extracted to create the course objects for the list.
+     *
+     * @return a list of course objects with the data from the database
+     * @throws SQLException thrown by JDBC when an error occurs with the database
+     */
     public List<Course> getAllCourses() throws SQLException {
         String coursesSql = "WITH full_students AS (" +
                 "SELECT * FROM students INNER JOIN users USING (user_id)" +
                 ")," +
-                "enrolls AS (" +
-                "SELECT * FROM courses INNER JOIN enrollments USING (course_id)" +
+                "classes AS (" +
+                "SELECT * FROM courses LEFT JOIN enrollments USING (course_id)" +
                 ")" +
-                "SELECT * FROM enrolls INNER JOIN full_students USING (student_id) ORDER BY course_id;";
+                "SELECT * FROM classes LEFT JOIN full_students USING (student_id) ORDER BY course_id;";
 
         String instructorSql = "WITH employees AS (" +
                 "SELECT * FROM faculty INNER JOIN users USING (user_id)" +
@@ -114,12 +140,6 @@ public class CourseRepository extends AbstractRepository {
 
                 currentCourse.addStudent(student);
             } else {
-                // Create new course and set it as the currently being build course
-                // if this isn't the first time we've done this block we need to add
-                // the current course to the list as we're about to create a new one
-                if (currentCourse != null) {
-                    courses.add(currentCourse);
-                }
                 currentCourse = new Course();
                 currentCourse.setCourseId(courseSet.getInt("course_id"));
                 currentCourse.setName(courseSet.getString("name"));
@@ -128,16 +148,20 @@ public class CourseRepository extends AbstractRepository {
                 currentCourse.setEnrollmentEndDate(courseSet.getLong("enrollment_end"));
                 currentCourse.setCredits(courseSet.getInt("credits"));
 
-                Student student = new Student();
-                student.setUserId(courseSet.getInt("user_id"));
-                student.setFirstName(courseSet.getString("first_name"));
-                student.setLastName(courseSet.getString("last_name"));
-                student.setEmail(courseSet.getString("email"));
-                student.setDateOfBirth(courseSet.getLong("date_of_birth"));
-                student.setUsername(courseSet.getString("username"));
-                student.setPassword(courseSet.getString("password"));
-                student.setMealPlanTier(courseSet.getInt("meal_plan_tier"));
-                student.setMajor(courseSet.getString("major"));
+                if(courseSet.getInt("student_id") != 0) {
+                    Student student = new Student();
+                    student.setUserId(courseSet.getInt("user_id"));
+                    student.setFirstName(courseSet.getString("first_name"));
+                    student.setLastName(courseSet.getString("last_name"));
+                    student.setEmail(courseSet.getString("email"));
+                    student.setDateOfBirth(courseSet.getLong("date_of_birth"));
+                    student.setUsername(courseSet.getString("username"));
+                    student.setPassword(courseSet.getString("password"));
+                    student.setMealPlanTier(courseSet.getInt("meal_plan_tier"));
+                    student.setMajor(courseSet.getString("major"));
+
+                    currentCourse.addStudent(student);
+                }
 
 
                 Faculty faculty = new Faculty();
@@ -159,8 +183,8 @@ public class CourseRepository extends AbstractRepository {
                     }
                 }
 
-                currentCourse.addStudent(student);
                 currentCourse.setProfessor(faculty);
+                courses.add(currentCourse);
             }
         }
 
