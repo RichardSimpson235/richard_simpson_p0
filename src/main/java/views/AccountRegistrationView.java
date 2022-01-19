@@ -74,7 +74,7 @@ public class AccountRegistrationView extends AbstractView {
             return "exit";
         }
 
-        System.out.println("What would you like your meal plan tier to be? Please enter an integer between 1 and 3, inclusive.");
+        System.out.println("What would you like your meal plan tier to be? Please enter an integer between 0 and 3, inclusive.");
         int mealPlanTier;
         while(true) {
             String tier = scanner.nextLine();
@@ -85,7 +85,7 @@ public class AccountRegistrationView extends AbstractView {
             try {
                 mealPlanTier = Integer.parseInt(tier);
 
-                if(mealPlanTier < 1 || mealPlanTier > 3) {
+                if(mealPlanTier < 0 || mealPlanTier > 3) {
                     System.out.println("The number you entered is too big! It must either be 1, 2, or 3.");
                 } else {
                     break;
