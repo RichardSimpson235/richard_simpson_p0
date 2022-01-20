@@ -59,7 +59,7 @@ public class CourseDetailView extends AbstractView {
         System.out.println("====================================================================");
         renderWrappedDescription();
         System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentStartDate())));
-        System.out.println("Enrollment Start Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
+        System.out.println("Enrollment End Date: " + dateFormat.format(new Date(course.getEnrollmentEndDate())));
         System.out.println("Credits: " + course.getCredits());
 
         if(this.accountService.isUserFaculty()) {
