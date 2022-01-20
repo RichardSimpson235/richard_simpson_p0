@@ -155,6 +155,7 @@ public class CourseDetailView extends AbstractView {
             } else if(input.equalsIgnoreCase("unenroll")) {
                 try {
                     accountService.unenroll(this.course);
+                    courseService.removeStudent((Student) accountService.getUser());
                     System.out.println("You have been unenrolled!");
                 } catch (EnrollmentFailedException e) {
                     System.out.println("Sorry, we were not able to unenroll you from that class.");
@@ -167,6 +168,7 @@ public class CourseDetailView extends AbstractView {
             } else if(input.equalsIgnoreCase("enroll")) {
                 try {
                     accountService.enroll(this.course);
+                    courseService.addStudent((Student) accountService.getUser());
                     System.out.println("You have been enrolled!");
                 } catch (EnrollmentFailedException e) {
                     System.out.println("Sorry, we were not able to enroll you in that class.");

@@ -2,6 +2,7 @@ package main.java.services;
 
 import main.java.exceptions.*;
 import main.java.models.Course;
+import main.java.models.Student;
 import main.java.repositories.CourseRepository;
 import main.java.structures.List;
 
@@ -138,5 +139,13 @@ public class CourseService {
         } catch (SQLException e) {
             throw new CourseRetrievalException();
         }
+    }
+
+    public void addStudent(Student user) {
+        this.course.addStudent(user);
+    }
+
+    public void removeStudent(Student user) {
+        this.course.removeStudent(user);
     }
 }

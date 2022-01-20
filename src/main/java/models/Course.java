@@ -161,6 +161,10 @@ public class Course {
         this.students.add(student);
     }
 
+    public void removeStudent(Student user) {
+        this.students.remove(user);
+    }
+
     /**
      * Returns a boolean that can be used to test whether the given faculty object
      * is the professor of this course or not.
