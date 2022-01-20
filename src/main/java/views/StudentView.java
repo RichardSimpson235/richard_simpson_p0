@@ -65,8 +65,8 @@ public class StudentView extends AbstractView {
         System.out.println("Last Name: " + student.getLastName());
         System.out.println("Email: " + student.getEmail());
         System.out.println("Date of Birth: " + dateFormat.format(student.getDateOfBirth()));
-        System.out.println("Salary: " + student.getMealPlanTier());
-        System.out.println("Department: " + student.getMajor());
+        System.out.println("Meal Plan  Tier: " + student.getMealPlanTier());
+        System.out.println("Major: " + student.getMajor());
         System.out.println("====================================================================");
     }
 
