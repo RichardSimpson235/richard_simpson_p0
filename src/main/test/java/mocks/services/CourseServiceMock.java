@@ -73,4 +73,12 @@ public class CourseServiceMock extends CourseService {
 
         return courses;
     }
+
+    @Override
+    public void addStudent(Student user) {
+    }
+
+    @Override
+    public void removeStudent(Student user) {
+    }
 }
