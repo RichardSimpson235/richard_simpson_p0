@@ -132,7 +132,9 @@ public class FacultyView extends AbstractView {
                         courseService.selectCourse(course);
 
                         return "detail";
-                    } else if(!input.equalsIgnoreCase("n")) {
+                    } else if(input.equalsIgnoreCase("n")) {
+                        System.out.println("Please enter a course integer, 'new', or 'exit'.");
+                    } else {
                         System.out.println("Please enter 'y' or 'n' for yes or no.");
                     }
                 } catch (IndexOutOfBoundsException e) {
