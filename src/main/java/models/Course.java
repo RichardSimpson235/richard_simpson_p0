@@ -161,8 +161,13 @@ public class Course {
         this.students.add(student);
     }
 
-    public void removeStudent(Student user) {
-        this.students.remove(user);
+    /**
+     * Removes a student from the list of students taking the course
+     *
+     * @param student the student to be removed
+     */
+    public void removeStudent(Student student) {
+        this.students.remove(student);
     }
 
     /**

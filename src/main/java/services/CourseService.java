@@ -141,11 +141,21 @@ public class CourseService {
         }
     }
 
-    public void addStudent(Student user) {
-        this.course.addStudent(user);
+    /**
+     * Adds a student to the current course context's student list
+     *
+     * @param student the student to be added
+     */
+    public void addStudent(Student student) {
+        this.course.addStudent(student);
     }
 
-    public void removeStudent(Student user) {
-        this.course.removeStudent(user);
+    /**
+     * Removes a student from the current course context's student list
+     *
+     * @param student the student to be removed
+     */
+    public void removeStudent(Student student) {
+        this.course.removeStudent(student);
     }
 }
